@@ -6,24 +6,24 @@ import (
 
 type Homepage struct {
 	app.Compo
+
+	content *contentView
 }
 
 func NewHomepage() *Homepage {
-	return &Homepage{}
+	p1 := newHomePanel()
+	c := newContentView(p1)
+	return &Homepage{content: c}
 }
 
 func (p *Homepage) Render() app.UI {
 	return app.Div().Body(
 		&header{},
 		app.Div().Body(
-			app.Div().Body(
-				app.Ul().Body(
-					app.Li().Body(
-						app.A().Href("/").Text("Home"),
-					),
-				),
-			).Class("navbar"),
-			app.Div().Text("Dit is test tekst voor in de div content").Class("content"),
+			newNavbar(),
+			newHomePanel(),
+			newHomePanel(),
+			newHomePanel(),
 		).Class("main"),
 	)
 }

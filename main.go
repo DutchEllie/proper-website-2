@@ -10,7 +10,9 @@ import (
 
 func main() {
 	homepage := components.NewHomepage()
+	aboutpage := components.NewAboutPage()
 	app.Route("/", homepage)
+	app.Route("/about", aboutpage)
 
 	// This is executed on the client side only.
 	// It handles client side stuff
