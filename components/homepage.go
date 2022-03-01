@@ -22,8 +22,6 @@ func (p *Homepage) Render() app.UI {
 		app.Div().Body(
 			newNavbar(),
 			newHomePanel(),
-			newHomePanel(),
-			newHomePanel(),
 		).Class("main"),
 	)
 }

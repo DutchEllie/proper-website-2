@@ -8,6 +8,8 @@ body {
 	margin-left: auto;
 	margin-right: auto;
 	color:aliceblue;
+	font-family: havakana;
+	font-size: 1.1em;
 }
 
 .header {
@@ -49,8 +51,23 @@ body {
 	margin-bottom: 5px;
 	position: relative;
 	float:right;
-	width: 633px;
+	width: 614px;
 	padding: 10px;
+}
 
+.content p {
+	width: 80%;
+	margin-left: 10px;
+	margin-top: 5px;
+	margin-bottom: 5px;
+}
 
+.p-h1 {
+	font-family: anisha;
+	font-size: 3em;
+}
+
+.p-h2 {
+	font-family: adreena;
+	font-size: 1.5em;
 }

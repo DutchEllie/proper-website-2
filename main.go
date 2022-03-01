@@ -24,13 +24,11 @@ func main() {
 		Description: "A 1990's style PWA!",
 		Styles: []string{
 			"/web/static/style.css",
+			"/web/static/adreena.css",
 			"/web/static/anisha.css",
+			"/web/static/havakana.css",
 		},
-		CacheableResources: []string{
-			"/web/static/style.css",
-			"/web/static/anisha.css",
-			"/web/static/images/background_star.gif",
-		},
+		CacheableResources: []string{},
 	})
 
 	if err := http.ListenAndServe(":8000", nil); err != nil {

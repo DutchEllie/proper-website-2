@@ -12,10 +12,14 @@ func newHomePanel() *homePanel {
 
 func (p *homePanel) Render() app.UI {
 	return app.Div().Body(
-		app.Raw(`<p>Welcome to my website, internet traveler!
-This website is my creative outlet and a way of expressing myself.
+		app.P().Text("Welcome, internet surfer!").Class("p-h1"),
+		app.Raw(`<p>This website is my creative outlet and a way of expressing myself.
 As of now, it's probably the most impressive thing I've ever coded.
-<br>
+<br><br>
 Please enjoy yourself and do sign the guestbook!!</p>`),
+		app.Div().Body(
+			app.P().Text("Please sign my guestbook!").Style("font-size", "0.8em"),
+			app.Img().Src("/web/static/images/email3.gif").Style("width", "40px").Style("position", "absolute").Style("bottom", "0px").Style("right", "0px"),
+		).Style("position", "absolute").Style("bottom", "5px").Style("right", "5px"),
 	).Class("content")
 }
