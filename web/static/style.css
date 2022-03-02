@@ -62,6 +62,13 @@ body {
 	margin-bottom: 5px;
 }
 
+.comment {
+	border: 2px solid;
+	border-radius: 3px;
+	border-color: aliceblue;
+	padding: 5px;
+}
+
 .p-h1 {
 	font-family: anisha;
 	font-size: 3em;

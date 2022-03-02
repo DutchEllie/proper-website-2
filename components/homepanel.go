@@ -4,6 +4,8 @@ import "github.com/maxence-charriere/go-app/v9/pkg/app"
 
 type homePanel struct {
 	app.Compo
+
+	onShowClick func()
 }
 
 func newHomePanel() *homePanel {
@@ -20,6 +22,10 @@ Please enjoy yourself and do sign the guestbook!!</p>`),
 		app.Div().Body(
 			app.P().Text("Please sign my guestbook!").Style("font-size", "0.8em"),
 			app.Img().Src("/web/static/images/email3.gif").Style("width", "40px").Style("position", "absolute").Style("bottom", "0px").Style("right", "0px"),
-		).Style("position", "absolute").Style("bottom", "5px").Style("right", "5px"),
+		).Style("position", "absolute").Style("bottom", "5px").Style("right", "5px").
+			OnClick(func(ctx app.Context, e app.Event) {
+				e.PreventDefault()
+				p.onShowClick()
+			}),
 	).Class("content")
 }
