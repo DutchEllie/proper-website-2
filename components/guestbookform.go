@@ -47,7 +47,6 @@ func (g *guestbookForm) Render() app.UI {
 				}
 				g.OnSubmit(g.name, g.message)
 				g.clear()
-				g.Update()
 			}),
 	).Class("content")
 }

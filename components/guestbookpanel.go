@@ -65,18 +65,6 @@ func (g *guestbookPanel) LoadComments() {
 	}
 }
 
-func (g *guestbookPanel) OnMount(ctx app.Context) {
-	//g.LoadComments()
-}
-
-func (g *guestbookPanel) OnUpdate(ctx app.Context) {
-	if g.CommentUpdate {
-		g.LoadComments()
-		g.Update()
-		g.CommentUpdate = false
-	}
-}
-
 type guestbookComment struct {
 	app.Compo
 

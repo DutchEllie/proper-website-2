@@ -22,8 +22,10 @@ type application struct {
 func main() {
 	homepage := components.NewHomepage()
 	aboutpage := components.NewAboutPage()
+	friendspage := components.NewFriendsPage()
 	app.Route("/", homepage)
 	app.Route("/about", aboutpage)
+	app.Route("/friends", friendspage)
 
 	// This is executed on the client side only.
 	// It handles client side stuff

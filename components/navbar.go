@@ -4,10 +4,8 @@ import "github.com/maxence-charriere/go-app/v9/pkg/app"
 
 type navbar struct {
 	app.Compo
-}
 
-func newNavbar() *navbar {
-	return &navbar{}
+	OnClickButton func(page string)
 }
 
 func (n *navbar) Render() app.UI {
@@ -18,6 +16,9 @@ func (n *navbar) Render() app.UI {
 			),
 			app.Li().Body(
 				app.A().Href("/about").Text("About"),
+			),
+			app.Li().Body(
+				app.A().Href("/friends").Text("Friends"),
 			),
 		),
 	).Class("navbar")

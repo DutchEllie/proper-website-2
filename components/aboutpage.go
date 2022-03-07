@@ -15,10 +15,8 @@ func NewAboutPage() *AboutPage {
 func (a *AboutPage) Render() app.UI {
 	return app.Div().Body(
 		&header{},
-		app.Div().Body(
-			newNavbar(),
-			&aboutPanel{},
-		).Class("main"),
+		&navbar{},
+		&aboutPanel{},
 	)
 }
 

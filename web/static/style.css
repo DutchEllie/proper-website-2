@@ -69,6 +69,21 @@ body {
 	padding: 5px;
 }
 
+.friend-frame {
+	width: 290px;
+	height: 200px;
+	overflow: hidden;
+	list-style: none;
+	text-decoration: none;
+	-ms-zoom: 0.75;
+	-moz-transform: scale(0.75);
+	-moz-transform-origin: 0 0;
+	-o-transform: scale(0.75);
+	-o-transform-origin: 0 0;
+	-webkit-transform: scale(0.75);
+	-webkit-transform-origin: 0 0;
+}
+
 .p-h1 {
 	font-family: anisha;
 	font-size: 3em;
