@@ -3,9 +3,10 @@ kind: Service
 metadata:
   name: {{ .Values.service.name }}
   namespace: {{ .Release.Namespace }}
-  {{- if .Values.service.annotations }}
-    annotations: {{ toYaml .Values.service.annotations | nindent 4}}
-  {{- end}}
+  {{- with .Values.service.annotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
 spec:
   selector:
     app: {{ .Values.name }}

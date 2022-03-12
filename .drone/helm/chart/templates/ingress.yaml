@@ -3,9 +3,10 @@ kind: Ingress
 metadata:
   name: {{ .Values.ingress.name }}
   namespace: {{ .Release.Namespace }}
-  {{- if .Values.ingress.annotations }}
-    annotations: {{ toYaml .Values.ingress.annotations | nindent 4 }}
-  {{- end}}
+  {{- with .Values.ingress.annotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
 spec:
   ingressClassName: {{ .Values.ingress.className }}
 {{- if .Values.ingress.tls }}
