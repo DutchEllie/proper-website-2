@@ -29,4 +29,7 @@ steps:
       from_secret: staging_api_server
     kube_token:
       from_secret: staging_kube_token
+    kube_certificate:
+      from_secret: staging_kube_certificate
+    kube_service_account: drone-deploy
     dry_run: true
