@@ -27,6 +27,7 @@ steps:
     chart: .drone/helm/chart
     namespace: default
     release: newsite-staging
+    skip_tls_verify: true
     values_files:
       - .drone/helm/values.yaml
     values:
