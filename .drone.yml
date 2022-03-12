@@ -13,6 +13,12 @@ steps:
     repo: dutchellie/proper-website-2
     tags: latest
 
+---
+
+kind: pipeline
+type: kubernetes
+name: deploy-staging
+
 - name: deploy-staging
   image: pelotech/drone-helm3
   settings:
