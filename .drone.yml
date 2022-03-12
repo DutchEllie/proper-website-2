@@ -25,7 +25,7 @@ steps:
   settings:
     mode: upgrade
     chart: .drone/helm/chart
-    namespace: default
+    namespace: drone-staging
     release: newsite-staging
     skip_tls_verify: true
     values_files:
