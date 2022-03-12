@@ -3,6 +3,9 @@ service:
   name: newsite-staging
 ingress:
   name: newsite-staging
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-staging
+    external-dns.alpha.kubernetes.io/hostname: "newsite.staging.dutchellie.nl"
   tls:
     - hosts:
         - newsite.staging.dutchellie.nl
