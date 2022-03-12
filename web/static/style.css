@@ -1,5 +1,6 @@
 html {
 	background-image: url(images/background_star.gif);
+	overflow-y: scroll;
 }
 
 body {
@@ -62,11 +63,42 @@ body {
 	margin-bottom: 5px;
 }
 
+.gbp {
+
+}
+
 .comment {
 	border: 2px solid;
-	border-radius: 3px;
+	border-radius: 6px;
 	border-color: aliceblue;
-	padding: 5px;
+	padding: 0px 0px 5px 0px;
+	background-color: darkseagreen;
+}
+
+.comment-header {
+	margin-top: 0px;
+	margin-left: 0px;
+	margin-right: 0px;
+	background-color: aquamarine;
+	width: 100%;
+	color: black;
+	display: flex;
+	flex-direction: row;
+}
+
+div .name {
+	text-align: left;
+}
+
+div .date {
+	font-size: 0.8em;
+	margin-right: 10px;
+	text-align: right;
+	color: black;
+}
+
+.comment-message {
+	color:white;
 }
 
 .friend-frame {

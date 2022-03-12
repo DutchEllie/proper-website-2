@@ -10,17 +10,20 @@ import (
 	"github.com/maxence-charriere/go-app/v9/pkg/app"
 )
 
+const (
+	apiurl = "https://api.quenten.nl/"
+)
+
 type Homepage struct {
 	app.Compo
 
-	showGuestbook    bool
-	guestbookUpdated bool
+	showGuestbook bool
 
 	page string
 }
 
 func NewHomepage() *Homepage {
-	return &Homepage{showGuestbook: true, guestbookUpdated: false, page: "home"}
+	return &Homepage{showGuestbook: true, page: "home"}
 }
 
 func (p *Homepage) Render() app.UI {
@@ -44,7 +47,7 @@ func (p *Homepage) Render() app.UI {
 					fmt.Printf("err: %v\n", err)
 					return
 				}
-				url := "/api/comment"
+				url := apiurl + "api/comment"
 				req, err := http.Post(url, "application/json", bytes.NewBuffer(jsondata))
 				if err != nil {
 					fmt.Printf("err: %v\n", err)

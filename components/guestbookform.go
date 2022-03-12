@@ -26,14 +26,14 @@ func (g *guestbookForm) Render() app.UI {
 				Name("name").
 				Placeholder("Name").
 				Required(true).
-				OnInput(g.ValueTo(&g.name)).
+				OnChange(g.ValueTo(&g.name)).
 				Value(g.name),
 			app.Input().
 				Type("text").
 				Name("message").
 				Placeholder("Message").
 				Required(true).
-				OnInput(g.ValueTo(&g.message)).
+				OnChange(g.ValueTo(&g.message)).
 				Value(g.message),
 			app.Input().
 				Type("submit").

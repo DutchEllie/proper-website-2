@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"io"
 	"net/http"
+	"time"
 
 	"git.home.dutchellie.nl/DutchEllie/proper-website-2/entity"
 	"github.com/maxence-charriere/go-app/v9/pkg/app"
@@ -24,28 +25,28 @@ AND VERY IMPORTANT!
 type guestbookPanel struct {
 	app.Compo
 
-	comments      []entity.Comment
-	CommentUpdate bool
+	comments []entity.Comment
 }
 
 func newGuestbookPanel() *guestbookPanel {
-	return &guestbookPanel{}
+	g := &guestbookPanel{}
+	g.LoadComments()
+	return g
 }
 
 func (g *guestbookPanel) Render() app.UI {
-	g.LoadComments()
 	return app.Div().Body(
 		app.Range(g.comments).Slice(func(i int) app.UI {
 			return &guestbookComment{
 				Comment: g.comments[i],
 			}
 		}),
-	).Class("content")
+	).Class("content gbp")
 }
 
 func (g *guestbookPanel) LoadComments() {
 	// TODO: maybe you can put this in a localbrowser storage?
-	url := "/api/comment"
+	url := apiurl + "api/comment"
 	res, err := http.Get(url)
 	if err != nil {
 		app.Log(err)
@@ -69,13 +70,18 @@ type guestbookComment struct {
 	app.Compo
 
 	Comment entity.Comment
+	time    string
 }
 
 func (c *guestbookComment) Render() app.UI {
+	c.time = c.Comment.PostDate.Format(time.RFC1123)
 	return app.Div().Body(
-		app.Span().Text("Name:").Style("font-weight", "800"),
-		app.P().Text(c.Comment.Name),
-		app.Span().Text("Comment:").Style("font-weight", "800"),
-		app.P().Text(c.Comment.Message),
+		app.Div().Class().Body(
+			app.P().Text(c.Comment.Name).Class("name"),
+			app.P().Text(c.time).Class("date"),
+		).Class("comment-header"),
+		app.Div().Class("comment-message").Body(
+			app.P().Text(c.Comment.Message),
+		),
 	).Class("comment")
 }
