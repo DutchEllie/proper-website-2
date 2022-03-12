@@ -32,7 +32,8 @@ steps:
       - .drone/helm/values.yaml
     values:
       - ingress.tls.host: newsite.staging.dutchellie.nl
-      - ingress.hosts[0].host: newsite.staging.dutchellie.nl
+      - ingress.hosts: 
+          - host: newsite.staging.dutchellie.nl
     kube_api_server:
       from_secret: staging_api_server
     kube_token:
