@@ -1,0 +1,17 @@
+name: newsite-prod
+service:
+  name: newsite-prod
+ingress:
+  name: newsite-prod
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+    external-dns.alpha.kubernetes.io/hostname: "newsite.dutchellie.nl"
+  tls:
+    - hosts:
+        - newsite.dutchellie.nl
+      secretName: newsite-tls
+  hosts:
+    - host: newsite.dutchellie.nl
+      paths:
+        - path: /
+          pathType: Prefix

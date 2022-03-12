@@ -2,6 +2,10 @@ kind: pipeline
 type: kubernetes
 name: default
 
+trigger:
+  event:
+    - push
+
 steps:
 - name: docker
   image: plugins/docker
@@ -13,13 +17,6 @@ steps:
     repo: dutchellie/proper-website-2
     tags: latest
 
----
-
-kind: pipeline
-type: kubernetes
-name: deploy-staging
-
-steps:
 - name: deploy-staging
   image: pelotech/drone-helm3
   settings:
@@ -39,6 +36,46 @@ steps:
       from_secret: staging_kube_certificate
     kube_service_account: drone-deploy
     dry_run: false
-  
-depends_on:
-  - docker
+
+---
+
+kind: pipeline
+type: kubernetes
+name: deploy-prod
+
+trigger:
+  event:
+    - promote
+  target:
+    - production
+
+steps:
+- name: docker
+  image: plugins/docker
+  settings:
+    username: 
+      from_secret: docker_username
+    password:
+      from_secret: docker_password
+    repo: dutchellie/proper-website-2
+    tags: latest
+
+- name: deploy-production
+  image: pelotech/drone-helm3
+  settings:
+    mode: upgrade
+    chart: .drone/helm/chart
+    namespace: drone-production
+    release: newsite-production
+    skip_tls_verify: true
+    values_files:
+#      - .drone/helm/values.yaml
+      - .drone/helm/prod-val.yaml
+    kube_api_server:
+      from_secret: prod_api_server
+    kube_token:
+      from_secret: prod_kube_token
+    kube_certificate:
+      from_secret: prod_kube_certificate
+    kube_service_account: drone-deploy
+    dry_run: false
