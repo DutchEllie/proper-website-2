@@ -1,5 +1,6 @@
 name: newsite-staging
-service: newsite-staging
+service:
+  name: newsite-staging
 ingress:
   name: newsite-staging
   tls:
