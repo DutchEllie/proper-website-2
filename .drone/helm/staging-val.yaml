@@ -1,0 +1,13 @@
+name: newsite-staging
+service: newsite-staging
+ingress:
+  name: newsite-staging
+  tls:
+    - hosts:
+        - newsite.staging.dutchellie.nl
+      secretName: newsite-staging-tls
+  hosts:
+    - host: newsite.staging.dutchellie.nl
+      paths:
+        - path: /
+          pathType: Prefix

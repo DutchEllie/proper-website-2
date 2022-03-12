@@ -30,10 +30,7 @@ steps:
     skip_tls_verify: true
     values_files:
       - .drone/helm/values.yaml
-    values:
-      - ingress.tls.host: newsite.staging.dutchellie.nl
-      - ingress.hosts: 
-          - host: newsite.staging.dutchellie.nl
+      - .drone/helm/staging-val.yaml
     kube_api_server:
       from_secret: staging_api_server
     kube_token:

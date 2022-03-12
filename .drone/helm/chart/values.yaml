@@ -15,9 +15,11 @@ ingress:
   name: newsite-ingress
   annotations: {}
   className: nginx
-  tls: 
-    host: example.com
-    secretName: newsite-tls  
+  tls: []
+  # tls:
+  # - hosts:
+  #   - example.com
+  #   secretName: example-tls
   hosts:
     - host: example.com
       paths:
