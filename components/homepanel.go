@@ -19,7 +19,7 @@ func (p *homePanel) Render() app.UI {
 		app.Raw(`<p>This website is my creative outlet and a way of expressing myself.
 As of now, it's probably the most impressive thing I've ever coded.
 <br><br>
-Please enjoy yourself and do sign the guestbook!!!</p>`),
+Please enjoy yourself and do sign the guestbook!!</p>`),
 		app.If(p.updateAvailable,
 			app.Div().Body(
 				app.P().Text("An update is available! Reload to update!!"),
