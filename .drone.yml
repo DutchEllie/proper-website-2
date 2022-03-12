@@ -15,7 +15,9 @@ steps:
     password:
       from_secret: docker_password
     repo: dutchellie/proper-website-2
-    tags: latest
+    tags: 
+      - latest
+      - ${DRONE_COMMIT_SHA:0:8}
 
 - name: deploy-staging
   image: pelotech/drone-helm3
@@ -28,6 +30,8 @@ steps:
     values_files:
 #      - .drone/helm/values.yaml
       - .drone/helm/staging-val.yaml
+    values:
+      - "image=dutchellie/proper-website-2:${DRONE_COMMIT_SHA:0:8}"
     kube_api_server:
       from_secret: staging_api_server
     kube_token:
@@ -58,7 +62,9 @@ steps:
     password:
       from_secret: docker_password
     repo: dutchellie/proper-website-2
-    tags: latest
+    tags: 
+      - latest
+      - ${DRONE_COMMIT_SHA:0:8}
 
 - name: deploy-production
   image: pelotech/drone-helm3
@@ -71,6 +77,8 @@ steps:
     values_files:
 #      - .drone/helm/values.yaml
       - .drone/helm/prod-val.yaml
+    values:
+      - "image=dutchellie/proper-website-2:${DRONE_COMMIT_SHA:0:8}"
     kube_api_server:
       from_secret: prod_api_server
     kube_token:
