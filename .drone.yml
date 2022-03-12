@@ -19,6 +19,7 @@ kind: pipeline
 type: kubernetes
 name: deploy-staging
 
+steps:
 - name: deploy-staging
   image: pelotech/drone-helm3
   settings:
