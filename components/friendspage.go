@@ -30,7 +30,7 @@ func (f *friendsPanel) Render() app.UI {
 		app.Ul().Body(
 			app.Li().Body(
 				app.IFrame().
-					Src("forestofunix.xyz").
+					Src("https://forestofunix.xyz").
 					Class("friend-iframe"),
 			),
 		),
