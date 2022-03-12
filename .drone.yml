@@ -7,18 +7,6 @@ trigger:
     - push
 
 steps:
-- name: docker
-  image: plugins/docker
-  settings:
-    username: 
-      from_secret: docker_username
-    password:
-      from_secret: docker_password
-    repo: dutchellie/proper-website-2
-    tags: 
-      - latest
-      - ${DRONE_COMMIT_SHA:0:8}
-
 - name: deploy-staging
   image: pelotech/drone-helm3
   settings:
