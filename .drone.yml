@@ -11,5 +11,4 @@ steps:
     password:
       from_secret: docker_password
     repo: dutchellie/proper-website-2
-    target: api
     tags: latest
