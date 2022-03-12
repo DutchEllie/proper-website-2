@@ -1,0 +1,25 @@
+name: newsite-deployment
+annotations: {}
+release: latest
+replicas: 1
+podAnnotations: {}
+containerName: newsite
+image: dutchellie/proper-website-2:latest
+imagePullPolicy: Always
+
+service:
+  name: newsite-service
+  annotations: {}
+
+ingress:
+  name: newsite-ingress
+  annotations: {}
+  className: nginx
+  tls: 
+    host: example.com
+    secretName: newsite-tls  
+  hosts:
+    - host: example.com
+      paths:
+        - path: /
+          pathType: Prefix

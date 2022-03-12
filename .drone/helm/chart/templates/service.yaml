@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.service.name }}
+  namespace: {{ .Release.Namespace }}
+  {{- if .Values.service.annotations }}
+    annotations: {{ toYaml .Values.service.annotations | nindent 4}}
+  {{- end}}
+spec:
+  selector:
+    app: {{ .Values.name }}
+    release: {{ .Values.release }}
+  ports:
+    - protocol: TCP
+      name: http
+      port: 8000
+      targetPort: 8000

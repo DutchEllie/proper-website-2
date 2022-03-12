@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.name }}
+  namespace: {{ .Release.Namespace }}
+  {{- if .Values.annotations }}
+    annotations: {{ toYaml .Values.annotations | nindent 4}}
+  {{- end}}
+spec:
+  selector:
+    matchLabels:
+      app: {{ .Values.name }}
+      release: {{ .Values.release }}
+  replicas: {{ .Values.replicas }}
+  template:
+    metadata:
+    {{- if .Values.podAnnotations }}
+      annotations:
+        {{- range $key, $value := .Values.controller.podAnnotations }}
+          {{ $key }}: {{ $value | quote }}
+        {{- end }}
+    {{- end }}
+      labels: 
+        app: {{ .Values.name }}
+        release: {{ .Values.release }}
+    spec:
+      containers:
+        - name: {{ .Values.containerName }}
+          image: {{ .Values.image }}
+          imagePullPolicy: {{ .Values.imagePullPolicy }}
+          ports:
+            - name: http
+              containerPort: 8000
+
+      

@@ -12,3 +12,21 @@ steps:
       from_secret: docker_password
     repo: dutchellie/proper-website-2
     tags: latest
+
+- name: deploy-staging
+  image: pelotech/drone-helm3
+  settings:
+    mode: upgrade
+    chart: .drone/helm/chart
+    namespace: default
+    release: newsite-staging
+    values_files:
+      - .drone/helm/values.yaml
+    values:
+      - ingress.tls.host: newsite.staging.dutchellie.nl
+      - ingress.hosts[0].host: newsite.staging.dutchellie.nl
+    kube_api_server:
+      from_secret: staging_api_server
+    kube_token:
+      from_secret: staging_kube_token
+    dry_run: true
