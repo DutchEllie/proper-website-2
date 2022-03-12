@@ -31,3 +31,5 @@ spec:
                 name: {{ .Values.service.name }}
                 port:
                   number: 8000
+          {{- end }}
+    {{- end }}

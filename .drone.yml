@@ -29,7 +29,7 @@ steps:
     release: newsite-staging
     skip_tls_verify: true
     values_files:
-      - .drone/helm/values.yaml
+#      - .drone/helm/values.yaml
       - .drone/helm/staging-val.yaml
     kube_api_server:
       from_secret: staging_api_server
