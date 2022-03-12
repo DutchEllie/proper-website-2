@@ -1,5 +1,7 @@
 # proper-website-2
 
+[![Build Status](https://drone.nicecock.eu/api/badges/DutchEllie/proper-website-2/status.svg)](https://drone.nicecock.eu/DutchEllie/proper-website-2)
+
 A truly proper website this time™
 
 This website will be done with this:
