@@ -11,7 +11,7 @@ import (
 )
 
 const (
-	apiurl = "https://api.quenten.nl/"
+	apiurl = "https://api.nicecock.eu/"
 )
 
 type Homepage struct {
