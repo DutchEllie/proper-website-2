@@ -6,7 +6,7 @@ import (
 	"net/http"
 	"time"
 
-	"git.home.dutchellie.nl/DutchEllie/proper-website-2/entity"
+	"dutchellie.nl/DutchEllie/proper-website-2/entity"
 	"github.com/maxence-charriere/go-app/v9/pkg/app"
 )
 

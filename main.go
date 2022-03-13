@@ -4,7 +4,7 @@ import (
 	"log"
 	"net/http"
 
-	"git.home.dutchellie.nl/DutchEllie/proper-website-2/components"
+	"dutchellie.nl/DutchEllie/proper-website-2/components"
 	"github.com/maxence-charriere/go-app/v9/pkg/app"
 )
 
