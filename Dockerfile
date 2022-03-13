@@ -11,7 +11,7 @@ WORKDIR /root/
 COPY --from=builder /project/web ./web/
 COPY --from=builder /project/app ./
 EXPOSE 8000
-ENV TESTING = true
+ENV TESTING true
 CMD ["./app"]  
 
 FROM alpine:latest AS production
@@ -20,5 +20,5 @@ WORKDIR /root/
 COPY --from=builder /project/web ./web/
 COPY --from=builder /project/app ./
 EXPOSE 8000
-ENV TESTING = false
+ENV TESTING false
 CMD ["./app"]  
