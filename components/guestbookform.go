@@ -12,7 +12,8 @@ type guestbookForm struct {
 	name    string
 	message string
 
-	OnSubmit func(
+	gbModalOpen bool
+	OnSubmit    func(
 		name string,
 		message string,
 	) // Handler to implement which calls the api
@@ -45,13 +46,56 @@ func (g *guestbookForm) Render() app.UI {
 				if g.name == "" || g.message == "" {
 					fmt.Printf("Error: one or more field(s) are empty. For now unhandled\n")
 				}
-				g.OnSubmit(g.name, g.message)
+				if len(g.name) > 40 || len(g.message) > 360 {
+					fmt.Printf("Error: Your message is too long fucker\n")
+					g.gbModalOpen = true
+					return
+				}
 				g.clear()
+				g.OnSubmit(g.name, g.message)
 			}),
+		app.If(
+			g.gbModalOpen,
+			&guestbookAlertModal{
+				OnClose: func() {
+					g.gbModalOpen = false
+					g.Update()
+				},
+			},
+		),
 	).Class("content")
 }
 
 func (g *guestbookForm) clear() {
 	g.name = ""
 	g.message = ""
+}
+
+type guestbookAlertModal struct {
+	app.Compo
+
+	PreviousAttempts int
+	OnClose          func() // For when we close the modal
+}
+
+func (g *guestbookAlertModal) Render() app.UI {
+	return app.Div().
+		Class("gb-modal").
+		ID("gbModal").
+		OnClick(func(ctx app.Context, e app.Event) {
+			g.OnClose()
+		}).
+		Body(
+			app.Div().
+				Class("gb-modal-content").
+				Body(
+					app.Span().Class("close").Text("X").
+						OnClick(func(ctx app.Context, e app.Event) {
+							//modal := app.Window().GetElementByID("gbModal")
+							//modal.Set("style", "none")
+							g.OnClose()
+						}),
+					app.P().Text("Your name must be <= 40 and your message must be <= 360 characters"),
+				),
+		)
 }
