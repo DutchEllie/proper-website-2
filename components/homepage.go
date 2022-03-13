@@ -5,14 +5,13 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
-	"os"
 
 	"dutchellie.nl/DutchEllie/proper-website-2/entity"
 	"github.com/maxence-charriere/go-app/v9/pkg/app"
 )
 
-const (
-	apiurl = "https://api.nicecock.eu/"
+var (
+	ApiURL string
 )
 
 type Homepage struct {
@@ -48,10 +47,7 @@ func (p *Homepage) Render() app.UI {
 					fmt.Printf("err: %v\n", err)
 					return
 				}
-				url := apiurl + "api/comment"
-				if os.Getenv("TESTING") == "true" {
-					url = apiurl + "api/testingcomment"
-				}
+				url := ApiURL
 
 				req, err := http.Post(url, "application/json", bytes.NewBuffer(jsondata))
 				if err != nil {

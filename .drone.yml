@@ -16,7 +16,8 @@ steps:
     password:
       from_secret: docker_password
     repo: dutchellie/proper-website-2
-    target: staging
+    build_args:
+      - APIURL=https://api.nicecock.eu/api/testingcomment
     tags: 
       - dev
       - ${DRONE_COMMIT_SHA:0:8}
@@ -63,7 +64,8 @@ steps:
     password: 
       from_secret: docker_password
     repo: dutchellie/proper-website-2
-    target: production
+    build_args:
+      - APIURL=https://api.nicecock.eu/api/comment
     tags: 
       - latest
       - ${DRONE_COMMIT_SHA:0:8}

@@ -4,7 +4,6 @@ import (
 	"encoding/json"
 	"io"
 	"net/http"
-	"os"
 	"time"
 
 	"dutchellie.nl/DutchEllie/proper-website-2/entity"
@@ -47,10 +46,7 @@ func (g *guestbookPanel) Render() app.UI {
 
 func (g *guestbookPanel) LoadComments() {
 	// TODO: maybe you can put this in a localbrowser storage?
-	url := apiurl + "api/comment"
-	if os.Getenv("TESTING") == "true" {
-		url = apiurl + "api/testingcomment"
-	}
+	url := ApiURL
 	res, err := http.Get(url)
 	if err != nil {
 		app.Log(err)
