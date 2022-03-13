@@ -88,6 +88,7 @@ body {
 
 div .name {
 	text-align: left;
+	overflow-wrap: break-word;
 }
 
 div .date {
@@ -99,6 +100,7 @@ div .date {
 
 .comment-message {
 	color:white;
+	overflow-wrap: break-word;
 }
 
 .gb-modal {

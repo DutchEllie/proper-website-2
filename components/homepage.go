@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
+	"os"
 
 	"dutchellie.nl/DutchEllie/proper-website-2/entity"
 	"github.com/maxence-charriere/go-app/v9/pkg/app"
@@ -48,6 +49,10 @@ func (p *Homepage) Render() app.UI {
 					return
 				}
 				url := apiurl + "api/comment"
+				if os.Getenv("TESTING") == "true" {
+					url = apiurl + "api/testingcomment"
+				}
+
 				req, err := http.Post(url, "application/json", bytes.NewBuffer(jsondata))
 				if err != nil {
 					fmt.Printf("err: %v\n", err)
