@@ -31,9 +31,28 @@ func main() {
 	// It exits immediately on the server side
 	app.RunWhenOnBrowser()
 
+	icon := &app.Icon{
+		Default: "/web/static/images/icon-small.png",
+		Large:   "/web/static/images/icon.png",
+	}
 	handler := &app.Handler{
-		Name:        "Internetica Galactica",
-		Description: "A 1990's style PWA!",
+		Name:            "Internetica Galactica",
+		Icon:            *icon,
+		BackgroundColor: "#362730",
+		ThemeColor:      "#362730",
+		LoadingLabel:    "Internetica Galactica",
+		Title:           "Internetica Galactica",
+		Description:     "A 1990's style PWA!",
+		Author:          "Quenten",
+		Keywords: []string{
+			"Based website",
+			"Cool website",
+			"PWA",
+			"Programming",
+			"Go", "Golang",
+			"Webassembly", "WASM",
+			"DutchEllie", "Quenten",
+		},
 		Styles: []string{
 			"/web/static/style.css",
 			"/web/static/adreena.css",
