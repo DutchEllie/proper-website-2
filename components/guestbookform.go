@@ -45,14 +45,15 @@ func (g *guestbookForm) Render() app.UI {
 				e.PreventDefault()
 				if g.name == "" || g.message == "" {
 					fmt.Printf("Error: one or more field(s) are empty. For now unhandled\n")
+					return
 				}
 				if len(g.name) > 40 || len(g.message) > 360 {
 					fmt.Printf("Error: Your message is too long fucker\n")
 					g.gbModalOpen = true
 					return
 				}
-				g.clear()
 				g.OnSubmit(g.name, g.message)
+				g.clear()
 			}),
 		app.If(
 			g.gbModalOpen,
