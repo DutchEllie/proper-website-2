@@ -56,15 +56,23 @@ body {
 	padding: 10px;
 }
 
-.content p {
-	width: 80%;
+.content-text {
+	max-width: 80%;
 	margin-left: 10px;
 	margin-top: 5px;
 	margin-bottom: 5px;
 }
 
-.gbp {
+/*
+.content p {
+	max-width: 80%;
+	margin-left: 10px;
+	margin-top: 5px;
+	margin-bottom: 5px;
+}*/
 
+.gbp {
+	
 }
 
 .comment {
@@ -96,6 +104,20 @@ div .date {
 	margin-right: 10px;
 	text-align: right;
 	color: black;
+}
+
+div.comment-header p {
+	width: 80%;
+    margin-left: 10px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+div.comment-message p{
+	width: 80%;
+    margin-left: 10px;
+    margin-top: 5px;
+    margin-bottom: 5px;
 }
 
 .comment-message {
@@ -156,9 +178,39 @@ div .date {
 .p-h1 {
 	font-family: anisha;
 	font-size: 3em;
+	margin-top:5px;
+	margin-bottom:5px;
+	margin-left: 10px;
 }
 
 .p-h2 {
-	font-family: adreena;
 	font-size: 1.5em;
+	margin-left: 10px;
+}
+
+.p-h3 {
+	font-size: 1.2em;
+}
+
+.small {
+	font-size: 0.8em;
+	width: 80%;
+	margin-left: 10px;
+	margin-top: 5px;
+	margin-bottom: 5px;
+}
+
+/*Margin top 5px*/
+.m-t5 {
+	margin-top: 5px;
+}
+
+/*Margin top-bottom 10px*/
+.m-tb10 {
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
+
+.fit { 
+	width: fit-content;
 }

@@ -29,7 +29,7 @@ type aboutPanel struct {
 func (a *aboutPanel) Render() app.UI {
 	return app.Div().Body(
 		app.Img().Src("/web/static/images/rin-1.gif").Styles(map[string]string{"width": "100px", "position": "absolute", "top": "10px", "right": "10px"}),
-		app.Raw(`<p>I am a 21 year old computer science student, living and studying in The Netherlands. I like Docker, Kubernetes and Golang!
+		app.Raw(`<p class="content-text">I am a 21 year old computer science student, living and studying in The Netherlands. I like Docker, Kubernetes and Golang!
 <br>
 I made this website because I was inspired again by the amazing Neocities pages that I discovered because of my friends.
 They also have their own pages (you can find them on the friends tab, do check them out!) and I just had to get a good website of my own!

@@ -21,10 +21,10 @@ const (
 func main() {
 	homepage := components.NewHomepage()
 	aboutpage := components.NewAboutPage()
-	friendspage := components.NewFriendsPage()
+	galaxiespage := components.NewGalaxiesPage()
 	app.Route("/", homepage)
 	app.Route("/about", aboutpage)
-	app.Route("/friends", friendspage)
+	app.Route("/galaxies", galaxiespage)
 
 	// This is executed on the client side only.
 	// It handles client side stuff

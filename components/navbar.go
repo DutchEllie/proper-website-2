@@ -18,7 +18,7 @@ func (n *navbar) Render() app.UI {
 				app.A().Href("/about").Text("About"),
 			),
 			app.Li().Body(
-				app.A().Href("/friends").Text("Friends"),
+				app.A().Href("/galaxies").Text("Galaxies"),
 			),
 		),
 	).Class("navbar")
