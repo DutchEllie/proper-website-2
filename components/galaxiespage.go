@@ -15,6 +15,7 @@ func (f *GalaxiesPage) Render() app.UI {
 		&header{},
 		&navbar{},
 		&galaxiesPanel{},
+		&bannerPanel{},
 	).Class("main")
 }
 
@@ -36,7 +37,7 @@ func (b *galaxiesPanel) Render() app.UI {
 		app.Div().
 			Body(
 				app.P().
-					Class("p-h2 m-tb10").
+					Class("p-h2 mt-20 mb-10 bold").
 					Text("My friends!"),
 				app.Ul().Body(
 					app.Li().Body(
@@ -73,6 +74,32 @@ func (b *galaxiesPanel) Render() app.UI {
 								Class("m-t5").
 								Text(`Website made by Kristy. Very cute website, I love it! Keep up the
 								awesome work!`),
+						),
+					),
+				),
+			),
+		app.Div().
+			Body(
+				app.P().
+					Class("p-h2 mt-20 mb-10 bold").
+					Text("Neat webspaces"),
+				app.P().
+					Class("m-t5").
+					Style("margin-left", "10px").
+					Text(`Just very neat websites I found. Not necessarily by people I know.
+					I just thought it would be nice to share them here!`),
+				app.Ul().Body(
+					app.Li().Body(
+						app.Div().Body(
+							// TODO: Create a modal popup for each name!!!
+							app.A().Href("https://evillious.ylimegirl.com/").
+								Class("p-h3 m-t5").
+								Text("Evillious Chronicles fan guide"),
+							app.P().
+								Class("m-t5").
+								Text(`A VERY cool website made by Ylimegirl! They wrote a whole
+								website dedicated to Evillious Chronicles, which is a super 
+								good Japanese light novel and vocaloid series!! Definitely look it up!`),
 						),
 					),
 				),

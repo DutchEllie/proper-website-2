@@ -5,9 +5,9 @@
 A truly proper website this time™
 
 **TODO**:
-- Redo the entire CSS with a framework
 - Change domain to quenten.nl and staging.quenten.nl
 - Dynamically make domains for other branches
+- Make a generic page component, so that you don't have to add the standard panels every time (such as navbar, leftbar, header, etc)
 
 
 This website will be done with this:

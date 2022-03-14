@@ -36,6 +36,7 @@ func (p *Homepage) Render() app.UI {
 				p.showGuestbook = !p.showGuestbook
 			},
 		},
+		&bannerPanel{},
 		&guestbookForm{
 			OnSubmit: func(name, message string) {
 				var comment entity.Comment
