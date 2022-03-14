@@ -57,11 +57,14 @@ body {
 }
 
 .content-text {
-	max-width: 80%;
+	max-width: 75%;
+	width: auto;
 	margin-left: 10px;
 	margin-top: 5px;
 	margin-bottom: 5px;
 }
+
+.
 
 /*
 .content p {

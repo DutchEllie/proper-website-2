@@ -16,10 +16,26 @@ func newHomePanel() *homePanel {
 func (p *homePanel) Render() app.UI {
 	return app.Div().Body(
 		app.P().Text("Welcome, internet surfer!").Class("p-h1"),
-		app.Raw(`<p class="content-text">This website is my creative outlet and a way of expressing myself.
-As of now, it's probably the most impressive thing I've ever coded.
-<br><br>
-Please enjoy yourself and do sign the guestbook!!</p>`),
+		app.Img().
+			Style("float", "right").
+			Style("margin-bottom", "50px").
+			Height(230).
+			Src("/web/static/images/rin-len1.webp"),
+		app.Raw(
+			`
+		<p class="content-text">
+		Welcome to my webspace! Whether you stumbled across this page by accident
+		or were linked here, you're more than welcome! This is my personal project that I like
+		to work on! I was inspired by a couple friends of mine, please do check their webspaces
+		out as well under "Galaxies" on the left side there!
+		If you like this page, there is a lot more, so have a look around! You can also leave a
+		nice message for me in the guestbook! There is no registration (unlike the rest of the "modern"
+		internet) so nothing of that sort!
+		That said, this website is my creative outlet and a way to introduce myself, so be kind please!
+		Also its code is entirely open-source and can be found 
+		<a href="https://dutchellie.nl/DutchEllie/proper-website-2">here</a> so if you like that sort 
+		of stuff, be my guest it's cool!</p>
+		`),
 		app.If(p.updateAvailable,
 			app.Div().Body(
 				app.P().
