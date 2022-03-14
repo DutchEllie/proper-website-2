@@ -4,6 +4,12 @@
 
 A truly proper website this time™
 
+**TODO**:
+- Redo the entire CSS with a framework
+- Change domain to quenten.nl and staging.quenten.nl
+- Dynamically make domains for other branches
+
+
 This website will be done with this:
 - Backend written in Golang
 - Templating with Go

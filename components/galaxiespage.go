@@ -63,6 +63,18 @@ func (b *galaxiesPanel) Render() app.UI {
 								minimalist website that's just lovely.`),
 						),
 					),
+					app.Li().Body(
+						app.Div().Body(
+							// TODO: Create a modal popup for each name!!!
+							app.A().Href("https://kristypixel.neocities.org").
+								Class("p-h3 m-t5").
+								Text("Kristy"),
+							app.P().
+								Class("m-t5").
+								Text(`Website made by Kristy. Very cute website, I love it! Keep up the
+								awesome work!`),
+						),
+					),
 				),
 			),
 	).Class("content")
