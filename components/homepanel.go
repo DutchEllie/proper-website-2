@@ -16,9 +16,17 @@ func newHomePanel() *homePanel {
 func (p *homePanel) Render() app.UI {
 	return app.Div().Body(
 		app.P().Text("Welcome, internet surfer!").Class("p-h1"),
+		app.Div().Body(
+			app.P().Text("Please sign my guestbook!").Class("small"),
+			app.Img().Src("/web/static/images/email3.gif").Style("width", "40px").Style("position", "absolute").Style("bottom", "0px").Style("right", "0px"),
+		).Style("position", "absolute").Style("top", "10px").Style("right", "5px").
+			OnClick(func(ctx app.Context, e app.Event) {
+				e.PreventDefault()
+				p.onShowClick()
+			}),
 		app.Img().
 			Style("float", "right").
-			Style("margin-bottom", "50px").
+			Style("margin-bottom", "10px").
 			Height(230).
 			Src("/web/static/images/rin-len1.webp"),
 		app.Raw(
@@ -42,14 +50,6 @@ func (p *homePanel) Render() app.UI {
 					Class("content-text").
 					Text("An update is available! Reload to update!"),
 			)),
-		app.Div().Body(
-			app.P().Text("Please sign my guestbook!").Class("small"),
-			app.Img().Src("/web/static/images/email3.gif").Style("width", "40px").Style("position", "absolute").Style("bottom", "0px").Style("right", "0px"),
-		).Style("position", "absolute").Style("bottom", "5px").Style("right", "5px").
-			OnClick(func(ctx app.Context, e app.Event) {
-				e.PreventDefault()
-				p.onShowClick()
-			}),
 	).Class("content")
 }
 
