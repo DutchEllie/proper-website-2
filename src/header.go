@@ -7,5 +7,10 @@ type header struct {
 }
 
 func (h *header) Render() app.UI {
-	return app.Div().Text("Internetica Galactica").Class("header")
+	return app.Div().
+		Class("header").
+		Body(
+			app.Text("Internetica Galactica"),
+			&updater{},
+		)
 }

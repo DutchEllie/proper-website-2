@@ -8,16 +8,27 @@ type updater struct {
 	updateAvailable bool
 }
 
-func (u *updater) onAppUpdate(ctx app.Context) {
+func (u *updater) OnAppUpdate(ctx app.Context) {
 	u.updateAvailable = ctx.AppUpdateAvailable()
 }
 
 func (u *updater) Render() app.UI {
 	return app.Div().Body(
 		app.If(u.updateAvailable,
-			app.Div().Body(
-				app.P().Text("An update for this website is available! Please click here to reload!"),
-			).Styles(map[string]string{"position": "absolute", "width": "100px", "bottom": "10px", "right": "10px"}).OnClick(u.onUpdateClick),
+			app.Div().
+				Class("update-box").
+				Body(
+					app.Img().
+						Class("pulsing").
+						Height(50).
+						Src("/web/static/images/hot1.gif"),
+					app.P().
+						Class("update-message").
+						Text("An update is available! Click here to reload!"),
+				).
+				OnClick(func(ctx app.Context, e app.Event) {
+					u.onUpdateClick(ctx, e)
+				}),
 		),
 	)
 }

@@ -22,6 +22,15 @@ body {
 	font-size: 5em;
 	font-family: anisha;
 	text-align: center;
+	height: 100%;
+}
+
+.update-box {
+	position:absolute;
+	max-width: 100px;
+	top: 0px;
+	right: 0px;
+	font-size: 0.8rem;
 }
 
 .main {
@@ -246,6 +255,33 @@ div.comment-message p{
 	margin-bottom: 5px;
 }
 
+.update-message {
+	font-family: havakana;
+	margin-top: 0px;
+
+}
+
+.pulsing {
+	animation-name: pulsing;
+	animation-duration: 0.4s;
+	animation-timing-function: ease-out;
+	animation-direction: alternate;
+	animation-iteration-count: infinite;
+	animation-play-state: running;
+}
+
+@keyframes pulsing {
+            0% {
+                transform: scale(.7);
+            }
+  
+            50% {
+            }
+  
+            100% {
+                transform: scale(1.5);
+            }
+        }
 /*Margin top 5px*/
 .m-t5 {
 	margin-top: 5px;
