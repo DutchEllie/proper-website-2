@@ -14,11 +14,15 @@ func (f *GalaxiesPage) Render() app.UI {
 	return newPage().
 		Title("Galaxies").
 		LeftBar(
-			&bannerPanel{},
+			newHTMLBlock().
+				Class("left").
+				Class("leftbarblock").
+				Src("/web/blocks/snippets/bannerpanel.html"),
 		).
 		Main(
 			newHTMLBlock().
 				Class("right").
+				Class("contentblock").
 				Src("/web/blocks/pages/galaxies.html"),
 		)
 }

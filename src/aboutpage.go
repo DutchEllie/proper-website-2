@@ -16,11 +16,15 @@ func (a *AboutPage) Render() app.UI {
 	return newPage().
 		Title("About me").
 		LeftBar(
-			&bannerPanel{},
+			newHTMLBlock().
+				Class("left").
+				Class("leftbarblock").
+				Src("/web/blocks/snippets/bannerpanel.html"),
 		).
 		Main(
 			newHTMLBlock().
 				Class("right").
+				Class("contentblock").
 				Src("/web/blocks/pages/about.html"),
 		)
 }

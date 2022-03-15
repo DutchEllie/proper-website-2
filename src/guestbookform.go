@@ -64,7 +64,7 @@ func (g *guestbookForm) Render() app.UI {
 				},
 			},
 		),
-	).Class("content")
+	)
 }
 
 func (g *guestbookForm) clear() {

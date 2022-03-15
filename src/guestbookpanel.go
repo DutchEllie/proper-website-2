@@ -35,15 +35,12 @@ func newGuestbookPanel() *guestbookPanel {
 }
 
 func (g *guestbookPanel) Render() app.UI {
-	return newUIBlock().
-		Class("right").
-		UI(
-			app.Range(g.comments).Slice(func(i int) app.UI {
-				return &guestbookComment{
-					Comment: g.comments[i],
-				}
-			}),
-		)
+	return app.Range(g.comments).Slice(func(i int) app.UI {
+		return &guestbookComment{
+			Comment: g.comments[i],
+		}
+	},
+	)
 }
 
 func (g *guestbookPanel) LoadComments() {

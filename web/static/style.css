@@ -74,6 +74,16 @@ body {
 	background-color: rgb(54, 39, 48);
 	margin-bottom: 5px;
 	position: relative;
+}
+
+.leftbarblock {
+	float:left;
+	width: 250px;
+	padding: 5px 0px;
+}
+
+.contentblock {
+	float:right;
 	width: 614px;
 	padding: 10px;
 }
