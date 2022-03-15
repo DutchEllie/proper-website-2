@@ -57,6 +57,7 @@ func main() {
 			"/web/static/havakana.css",
 			"/web/static/form.css",
 		},
+		Resources:          app.RemoteBucket("https://internetica-galactica.s3.nl-ams.scw.cloud"),
 		CacheableResources: []string{},
 	}
 

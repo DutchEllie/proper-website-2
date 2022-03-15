@@ -8,6 +8,19 @@ trigger:
 
 # STAGING!!!!!!!!!!!!!
 steps:
+- name: upload
+  image: plugins/s3
+  settings:
+    bucket: internetica-galactica
+    access_key:
+      from_secret: scw_access_key_id
+    secret_key:
+      from_secret: scw_secret_access_key
+    endpoint: https://s3.nl-ams.scw.cloud
+    region: nl-ams
+    source: web/**/*
+    target: /
+    acl: public-read
 - name: docker
   image: plugins/docker
   settings:
