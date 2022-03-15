@@ -31,6 +31,7 @@ type guestbook struct {
 	) // Handler to implement which calls the api
 }
 
+// TODO: The comments are loaded like 2 or 3 times every time the page is loaded...
 func (g *guestbook) OnMount(ctx app.Context) {
 	g.LoadComments(ctx)
 }
