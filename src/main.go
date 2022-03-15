@@ -64,35 +64,7 @@ func main() {
 	}
 
 	app.GenerateStaticWebsite("./staticsite", handler)
-	/*
-		uri := "mongodb+srv://guestbook-database:5WUDzpvBKBBiiMCy@cluster0.wtt64.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"
-
-		client, err := mongo.Connect(context.TODO(), options.Client().ApplyURI(uri))
-		if err != nil {
-			fmt.Println(err)
-			return
-		}
-		defer func() {
-			if err = client.Disconnect(context.TODO()); err != nil {
-				panic(err)
-			}
-		}()
-
-		// Ping the primary
-		if err := client.Ping(context.TODO(), readpref.Primary()); err != nil {
-			panic(err)
-		}
-		db := client.Database("guestbook")
-		coll := db.Collection("comments")
-
-		apiapp := &application{
-			client:     client,
-			database:   db,
-			collection: coll,
-		}
-	*/
 	http.Handle("/", handler)
-	//http.HandleFunc("/api/comment", apiapp.Comment)
 
 	if err := http.ListenAndServe(":8000", nil); err != nil {
 		log.Fatal(err)
