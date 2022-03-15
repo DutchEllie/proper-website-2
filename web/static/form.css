@@ -1,0 +1,45 @@
+.input-groups {
+	display:flex;
+	flex-wrap:wrap;
+}
+
+.input-group {
+	padding: 6px;
+}
+
+.input-group-name {
+	width: 50%;
+	float:left;
+}
+
+.input-group-email {
+	width: 50%;
+	float:right;
+	padding-right: 16px;
+}
+
+.input-group-website {
+	width: 100%;
+	padding-right: 16px;
+}
+
+.input-group-message {
+	width: 100%;
+	padding-right: 16px;
+
+}
+
+.submit-field {
+	text-align: right;
+	padding-right: 10px;
+	padding-bottom: 5px;
+}
+
+.input {
+	width: 100%;
+}
+
+.fr {
+	width: 100%;
+	display: flex;
+}

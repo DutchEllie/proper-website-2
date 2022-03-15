@@ -11,6 +11,6 @@ func (h *header) Render() app.UI {
 		Class("header").
 		Body(
 			app.Text("Internetica Galactica"),
-			&updater{},
+			//&updater{},
 		)
 }

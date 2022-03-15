@@ -14,6 +14,7 @@ type guestbookForm struct {
 
 	gbModalOpen bool
 	OnSubmit    func(
+		ctx app.Context,
 		name string,
 		message string,
 	) // Handler to implement which calls the api
@@ -52,7 +53,7 @@ func (g *guestbookForm) Render() app.UI {
 					g.gbModalOpen = true
 					return
 				}
-				g.OnSubmit(g.name, g.message)
+				g.OnSubmit(ctx, g.name, g.message)
 				g.clear()
 			}),
 		app.If(
@@ -72,6 +73,7 @@ func (g *guestbookForm) clear() {
 	g.message = ""
 }
 
+/*
 type guestbookAlertModal struct {
 	app.Compo
 
@@ -100,3 +102,4 @@ func (g *guestbookAlertModal) Render() app.UI {
 				),
 		)
 }
+*/

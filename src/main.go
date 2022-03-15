@@ -55,6 +55,7 @@ func main() {
 			"/web/static/adreena.css",
 			"/web/static/anisha.css",
 			"/web/static/havakana.css",
+			"/web/static/form.css",
 		},
 		CacheableResources: []string{},
 	}

@@ -23,7 +23,6 @@ func NewHomepage() *Homepage {
 }
 
 func (p *Homepage) Render() app.UI {
-	gbp := newGuestbookPanel()
 	return newPage().
 		Title("Homepage").
 		LeftBar(
@@ -41,10 +40,12 @@ func (p *Homepage) Render() app.UI {
 				Class("right").
 				Class("contentblock").
 				UI(
-					&guestbookForm{
-						OnSubmit: func(name, message string) {
+					&guestbook{
+						OnSubmit: func(ctx app.Context, name, email, website, message string) {
 							var comment entity.Comment
 							comment.Name = name
+							comment.Email = email
+							comment.Website = website
 							comment.Message = message
 
 							jsondata, err := json.Marshal(comment)
@@ -54,23 +55,24 @@ func (p *Homepage) Render() app.UI {
 							}
 							url := ApiURL
 
-							req, err := http.Post(url, "application/json", bytes.NewBuffer(jsondata))
-							if err != nil {
-								fmt.Printf("err: %v\n", err)
-								return
-							}
-							if req.StatusCode == 200 {
-								p.Update()
-							}
-							defer req.Body.Close()
+							ctx.Async(func() {
+								req, err := http.Post(url, "application/json", bytes.NewBuffer(jsondata))
+								if err != nil {
+									fmt.Printf("err: %v\n", err)
+									return
+								}
+								if req.StatusCode == 200 {
+									p.Update()
+								}
+								defer req.Body.Close()
+							})
 						},
 					},
 				),
-			newUIBlock().
-				Class("right").
-				Class("contentblock").
-				UI(
-					gbp.Render(),
-				),
+			/*
+				newUIBlock().
+					Class("right").
+					Class("contentblock").
+					UI(),*/
 		)
 }

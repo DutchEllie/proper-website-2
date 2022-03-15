@@ -4,7 +4,6 @@ import (
 	"encoding/json"
 	"io"
 	"net/http"
-	"time"
 
 	"dutchellie.nl/DutchEllie/proper-website-2/entity"
 	"github.com/maxence-charriere/go-app/v9/pkg/app"
@@ -28,44 +27,58 @@ type guestbookPanel struct {
 	comments []entity.Comment
 }
 
-func newGuestbookPanel() *guestbookPanel {
-	g := &guestbookPanel{}
-	g.LoadComments()
-	return g
+func (g *guestbookPanel) OnMount(ctx app.Context) {
+	g.LoadComments(ctx)
+}
+
+func (g *guestbookPanel) OnNav(ctx app.Context) {
+	g.LoadComments(ctx)
+}
+
+func (g *guestbookPanel) OnUpdate(ctx app.Context) {
+	g.LoadComments(ctx)
 }
 
 func (g *guestbookPanel) Render() app.UI {
-	return app.Range(g.comments).Slice(func(i int) app.UI {
-		return &guestbookComment{
-			Comment: g.comments[i],
-		}
-	},
-	)
+	return app.Div().Body(
+		app.Range(g.comments).Slice(func(i int) app.UI {
+			return &guestbookComment{
+				Comment: g.comments[i],
+			}
+		},
+		),
+	).OnSubmit(func(ctx app.Context, e app.Event) {
+		g.LoadComments(ctx)
+	})
 }
 
-func (g *guestbookPanel) LoadComments() {
+func (g *guestbookPanel) LoadComments(ctx app.Context) {
 	// TODO: maybe you can put this in a localbrowser storage?
 	url := ApiURL
-	res, err := http.Get(url)
-	if err != nil {
-		app.Log(err)
-		return
-	}
-	defer res.Body.Close()
-	jsondata, err := io.ReadAll(res.Body)
-	if err != nil {
-		app.Log(err)
-		return
-	}
+	ctx.Async(func() {
+		res, err := http.Get(url)
+		if err != nil {
+			app.Log(err)
+			return
+		}
+		defer res.Body.Close()
+		jsondata, err := io.ReadAll(res.Body)
+		if err != nil {
+			app.Log(err)
+			return
+		}
 
-	err = json.Unmarshal(jsondata, &g.comments)
-	if err != nil {
-		app.Log(err)
-		return
-	}
+		ctx.Dispatch(func(ctx app.Context) {
+			err = json.Unmarshal(jsondata, &g.comments)
+			if err != nil {
+				app.Log(err)
+				return
+			}
+		})
+	})
 }
 
-type guestbookComment struct {
+/*type guestbookComment struct {
 	app.Compo
 
 	Comment entity.Comment
@@ -84,3 +97,4 @@ func (c *guestbookComment) Render() app.UI {
 		),
 	).Class("comment")
 }
+*/

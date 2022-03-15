@@ -126,9 +126,10 @@ body {
 	margin-bottom: 5px;
 }*/
 
-.gbp {
-	
+.guestbook-form-div {
+	margin: 0px 0px 10px 0px;
 }
+
 
 .comment {
 	border: 2px solid;
