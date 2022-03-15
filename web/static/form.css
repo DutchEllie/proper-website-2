@@ -32,7 +32,8 @@
 .submit-field {
 	text-align: right;
 	padding-right: 10px;
-	padding-bottom: 5px;
+	padding-bottom: 10px;
+	width: 100%;
 }
 
 .input {
