@@ -32,7 +32,7 @@ func (p *Homepage) Render() app.UI {
 		Main(
 			newHTMLBlock().
 				Class("right").
-				Src("/web/blocks/intro.html"),
+				Src("/web/blocks/pages/intro.html"),
 			&guestbookForm{
 				OnSubmit: func(name, message string) {
 					var comment entity.Comment

@@ -262,3 +262,7 @@ div.comment-message p{
 .fit { 
 	width: fit-content;
 }
+
+.invisible {
+	visibility: hidden;
+}

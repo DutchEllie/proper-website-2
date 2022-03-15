@@ -19,6 +19,6 @@ func (f *GalaxiesPage) Render() app.UI {
 		Main(
 			newHTMLBlock().
 				Class("right").
-				Src("/web/blocks/galaxies.html"),
+				Src("/web/blocks/pages/galaxies.html"),
 		)
 }

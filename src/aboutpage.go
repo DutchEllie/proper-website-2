@@ -21,6 +21,6 @@ func (a *AboutPage) Render() app.UI {
 		Main(
 			newHTMLBlock().
 				Class("right").
-				Src("/web/blocks/about.html"),
+				Src("/web/blocks/pages/about.html"),
 		)
 }
