@@ -46,6 +46,16 @@ body {
 	color:rgb(252, 230, 255)
 }
 
+.left {
+	float:left;
+	max-width: 250px;
+}
+
+.right {
+	float:right;
+	max-width: 614px;
+}
+
 .leftbar {
 	border: 3px solid;
 	border-radius: 4px;
@@ -55,6 +65,17 @@ body {
 	float:left;
 	width: 250px;
 	padding: 5px 0px;
+}
+
+.block {
+	border: 3px solid;
+	border-radius: 4px;
+	border-color: rgb(252, 230, 255);
+	background-color: rgb(54, 39, 48);
+	margin-bottom: 5px;
+	position: relative;
+	width: 614px;
+	padding: 10px;
 }
 
 .content {

@@ -1,4 +1,4 @@
-package components
+package main
 
 import (
 	"github.com/maxence-charriere/go-app/v9/pkg/app"
@@ -13,11 +13,16 @@ func NewAboutPage() *AboutPage {
 }
 
 func (a *AboutPage) Render() app.UI {
-	return app.Div().Body(
-		&header{},
-		&navbar{},
-		&aboutPanel{},
-	)
+	return newPage().
+		Title("About me").
+		LeftBar(
+			&bannerPanel{},
+		).
+		Main(
+			newHTMLBlock().
+				Class("right").
+				Src("/web/blocks/about.html"),
+		)
 }
 
 type aboutPanel struct {

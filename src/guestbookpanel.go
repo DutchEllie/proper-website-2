@@ -1,4 +1,4 @@
-package components
+package main
 
 import (
 	"encoding/json"
@@ -35,13 +35,15 @@ func newGuestbookPanel() *guestbookPanel {
 }
 
 func (g *guestbookPanel) Render() app.UI {
-	return app.Div().Body(
-		app.Range(g.comments).Slice(func(i int) app.UI {
-			return &guestbookComment{
-				Comment: g.comments[i],
-			}
-		}),
-	).Class("content gbp")
+	return newUIBlock().
+		Class("right").
+		UI(
+			app.Range(g.comments).Slice(func(i int) app.UI {
+				return &guestbookComment{
+					Comment: g.comments[i],
+				}
+			}),
+		)
 }
 
 func (g *guestbookPanel) LoadComments() {

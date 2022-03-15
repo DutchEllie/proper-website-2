@@ -4,7 +4,6 @@ import (
 	"log"
 	"net/http"
 
-	"dutchellie.nl/DutchEllie/proper-website-2/components"
 	"github.com/maxence-charriere/go-app/v9/pkg/app"
 )
 
@@ -19,12 +18,14 @@ const (
 )
 
 func main() {
-	homepage := components.NewHomepage()
-	aboutpage := components.NewAboutPage()
-	galaxiespage := components.NewGalaxiesPage()
+	homepage := NewHomepage()
+	aboutpage := NewAboutPage()
+	galaxiespage := NewGalaxiesPage()
 	app.Route("/", homepage)
 	app.Route("/about", aboutpage)
 	app.Route("/galaxies", galaxiespage)
+
+	app.Handle(getHTML, handleGetHTML)
 
 	// This is executed on the client side only.
 	// It handles client side stuff

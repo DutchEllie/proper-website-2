@@ -3,8 +3,8 @@ ARG APIURL
 WORKDIR /project
 ADD . /project/
 RUN go mod tidy
-RUN GOARCH=wasm GOOS=js go build -ldflags="-X 'dutchellie.nl/DutchEllie/proper-website-2/components.ApiURL=$APIURL'" -o web/app.wasm
-RUN	go build -ldflags="-X 'dutchellie.nl/DutchEllie/proper-website-2/components.ApiURL=$APIURL'" -o app
+RUN GOARCH=wasm GOOS=js go build -o web/app.wasm -ldflags="-X 'main.ApiURL=$APIURL'" ./src
+RUN	go build -o app -ldflags="-X 'main.ApiURL=$APIURL'" ./src
 
 FROM alpine:latest AS staging
 RUN apk --no-cache add ca-certificates

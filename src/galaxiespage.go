@@ -1,4 +1,4 @@
-package components
+package main
 
 import "github.com/maxence-charriere/go-app/v9/pkg/app"
 
@@ -11,12 +11,16 @@ func NewGalaxiesPage() *GalaxiesPage {
 }
 
 func (f *GalaxiesPage) Render() app.UI {
-	return app.Div().Body(
-		&header{},
-		&navbar{},
-		&galaxiesPanel{},
-		&bannerPanel{},
-	).Class("main")
+	return newPage().
+		Title("Galaxies").
+		LeftBar(
+			&bannerPanel{},
+		).
+		Main(
+			newHTMLBlock().
+				Class("right").
+				Src("/web/blocks/galaxies.html"),
+		)
 }
 
 type galaxiesPanel struct {
