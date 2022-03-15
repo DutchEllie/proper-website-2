@@ -13,10 +13,6 @@ import (
 //	collection *mongo.Collection
 //}
 
-const (
-	apiurl = "https://quenten.nl:8007/"
-)
-
 func main() {
 	homepage := NewHomepage()
 	aboutpage := NewAboutPage()

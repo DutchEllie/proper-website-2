@@ -16,8 +16,6 @@ var (
 
 type Homepage struct {
 	app.Compo
-
-	showGuestbook bool
 }
 
 func NewHomepage() *Homepage {
