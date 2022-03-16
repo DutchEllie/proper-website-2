@@ -36,13 +36,14 @@ func (g *guestbook) OnMount(ctx app.Context) {
 	g.LoadComments(ctx)
 }
 
+/*
 func (g *guestbook) OnNav(ctx app.Context) {
 	g.LoadComments(ctx)
 }
 
 func (g *guestbook) OnUpdate(ctx app.Context) {
 	g.LoadComments(ctx)
-}
+}*/
 
 func (g guestbook) Render() app.UI {
 	return app.Div().Body(

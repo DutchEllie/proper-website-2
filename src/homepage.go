@@ -69,10 +69,5 @@ func (p *Homepage) Render() app.UI {
 						},
 					},
 				),
-			/*
-				newUIBlock().
-					Class("right").
-					Class("contentblock").
-					UI(),*/
 		)
 }

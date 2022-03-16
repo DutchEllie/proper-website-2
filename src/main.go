@@ -57,7 +57,20 @@ func main() {
 			"/web/static/havakana.css",
 			"/web/static/form.css",
 		},
-		CacheableResources: []string{},
+		CacheableResources: []string{
+			// Images
+			"/web/static/images/email3.gif",
+			"/web/static/images/rin-len1.webp",
+			"/web/static/images/background_star.gif",
+			"/web/static/images/kanata-1.gif",
+			"/web/static/images/rin-1.gif",
+			"/web/static/images/rin-2.gif",
+			// Pages
+			"/web/blocks/pages/about.html",
+			"/web/blocks/pages/galaxies.html",
+			"/web/blocks/pages/intro.html",
+			"/web/blocks/snippets/bannerpanel.html",
+		},
 	}
 
 	app.GenerateStaticWebsite("./staticsite", handler)
