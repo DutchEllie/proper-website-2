@@ -17,9 +17,13 @@ func main() {
 	homepage := NewHomepage()
 	aboutpage := NewAboutPage()
 	galaxiespage := NewGalaxiesPage()
+	undertalePage := NewUndertalePage()
+	emptyPage := NewEmptyPage()
 	app.Route("/", homepage)
 	app.Route("/about", aboutpage)
 	app.Route("/galaxies", galaxiespage)
+	app.Route("/undertale", undertalePage)
+	app.Route("/empty", emptyPage)
 
 	app.Handle(getHTML, handleGetHTML)
 
