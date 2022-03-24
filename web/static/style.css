@@ -7,11 +7,13 @@ html {
 body {
 	margin: 0px;
 	height: 100%;
+	background-image: url(images/background_star.gif);
 }
 
 .background {
 	background-image: url(images/background_star.gif);
 	width: 100%;
+	height: 100vh;
 	position: absolute;
 }
 

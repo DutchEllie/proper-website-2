@@ -53,31 +53,24 @@ func (p *page) Render() app.UI {
 		p.IbackgroundClass = app.AppendClass(p.IbackgroundClass, "background")
 	}
 	return app.Div().
-		Class(p.IbackgroundClass).
+		Class("main").
 		Body(
-			app.Range(p.Ibackground).Slice(func(i int) app.UI {
-				return p.Ibackground[i]
-			}),
+			// Header and navbar
+			&header{},
 			app.Div().
-				Class("main").
+				Class("left").
 				Body(
-					// Header and navbar
-					&header{},
-					app.Div().
-						Class("left").
-						Body(
-							&navbar{},
-							app.Range(p.IleftBar).Slice(func(i int) app.UI {
-								return p.IleftBar[i]
-							}),
-						),
-					app.Div().
-						Class("right").
-						Body(
-							app.Range(p.Imain).Slice(func(i int) app.UI {
-								return p.Imain[i]
-							}),
-						),
+					&navbar{},
+					app.Range(p.IleftBar).Slice(func(i int) app.UI {
+						return p.IleftBar[i]
+					}),
+				),
+			app.Div().
+				Class("right").
+				Body(
+					app.Range(p.Imain).Slice(func(i int) app.UI {
+						return p.Imain[i]
+					}),
 				),
 		)
 }
