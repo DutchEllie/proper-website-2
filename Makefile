@@ -1,5 +1,5 @@
-APIURL_prod := https://api.nicecock.eu/api/comment
-APIURL_staging := https://api.nicecock.eu/api/testingcomment
+APIURL_prod := https://api.nicecock.eu/api
+APIURL_staging := https://api.nicecock.eu/api/testing
 
 build:
 	GOARCH=wasm GOOS=js go build -o web/app.wasm -ldflags="-X 'main.ApiURL=${APIURL_staging}'"  ./src
