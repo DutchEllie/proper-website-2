@@ -1,6 +1,7 @@
 package main
 
 import (
+	"compress/gzip"
 	"log"
 	"net/http"
 
@@ -79,7 +80,7 @@ func main() {
 	}
 
 	app.GenerateStaticWebsite("./staticsite", handler)
-	compressed := handlers.CompressHandler(handler)
+	compressed := handlers.CompressHandlerLevel(handler, gzip.BestSpeed)
 	http.Handle("/", compressed)
 
 	if err := http.ListenAndServe(":8000", nil); err != nil {
