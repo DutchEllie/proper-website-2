@@ -15,6 +15,8 @@ func NewUndertalePage() *UndertalePage {
 func (u *UndertalePage) Render() app.UI {
 	return newPage().
 		Title("Undertale").
+		BackgroundClass("undertale-bg").
+		Background().
 		LeftBar(
 			newHTMLBlock().
 				Class("left").

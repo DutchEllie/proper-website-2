@@ -162,7 +162,7 @@ func (g guestbook) Render() app.UI {
 
 func (g *guestbook) LoadComments(ctx app.Context) {
 	// TODO: maybe you can put this in a localbrowser storage?
-	url := ApiURL
+	url := ApiURL + "/comment"
 	ctx.Async(func() {
 		res, err := http.Get(url)
 		if err != nil {

@@ -53,7 +53,7 @@ func (p *Homepage) Render() app.UI {
 								fmt.Printf("err: %v\n", err)
 								return
 							}
-							url := ApiURL
+							url := ApiURL + "/comment"
 
 							ctx.Async(func() {
 								req, err := http.Post(url, "application/json", bytes.NewBuffer(jsondata))

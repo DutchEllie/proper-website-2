@@ -1,16 +1,24 @@
 html {
-	background-image: url(images/background_star.gif);
 	overflow-y: scroll;
+	margin: 0px;
+	height: 100%;
 }
 
 body {
-	width: 900px;
-	position: relative;
-	margin-left: auto;
-	margin-right: auto;
-	color:aliceblue;
-	font-family: havakana;
-	font-size: 1.1em;
+	margin: 0px;
+	height: 100%;
+}
+
+.background {
+	background-image: url(images/background_star.gif);
+	width: 100%;
+	position: absolute;
+}
+
+.undertale-bg {
+	background-image: url(images/ut-bg.webp);
+	width: 100%;
+	position: sticky;
 }
 
 .header {
@@ -35,6 +43,13 @@ body {
 
 .main {
 	margin-top: 5px;
+	width: 900px;
+	position: relative;
+	margin-left: auto;
+	margin-right: auto;
+	color:aliceblue;
+	font-family: havakana;
+	font-size: 1.1em;
 }
 
 .navbar {
@@ -107,6 +122,10 @@ body {
 	float:right;
 	width: 614px;
 	padding: 10px;
+}
+
+.no-border {
+	border: none;
 }
 
 .content-text {

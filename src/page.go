@@ -11,14 +11,26 @@ type page struct {
 	Blah blah
 	etc*/
 
-	IleftBar []app.UI
-	Imain    []app.UI
+	IbackgroundClass string
+	Ibackground      []app.UI
+	IleftBar         []app.UI
+	Imain            []app.UI
 
 	// TODO: Possibly add "updateavailable" here, so it shows up on every page
 }
 
 func newPage() *page {
 	return &page{}
+}
+
+func (p *page) Background(v ...app.UI) *page {
+	p.Ibackground = app.FilterUIElems(v...)
+	return p
+}
+
+func (p *page) BackgroundClass(t string) *page {
+	p.IbackgroundClass = app.AppendClass(p.IbackgroundClass, t)
+	return p
 }
 
 func (p *page) Title(t string) *page {
@@ -37,25 +49,35 @@ func (p *page) Main(v ...app.UI) *page {
 }
 
 func (p *page) Render() app.UI {
+	if p.IbackgroundClass == "" {
+		p.IbackgroundClass = app.AppendClass(p.IbackgroundClass, "background")
+	}
 	return app.Div().
-		Class("main").
+		Class(p.IbackgroundClass).
 		Body(
-			// Header and navbar
-			&header{},
+			app.Range(p.Ibackground).Slice(func(i int) app.UI {
+				return p.Ibackground[i]
+			}),
 			app.Div().
-				Class("left").
+				Class("main").
 				Body(
-					&navbar{},
-					app.Range(p.IleftBar).Slice(func(i int) app.UI {
-						return p.IleftBar[i]
-					}),
-				),
-			app.Div().
-				Class("right").
-				Body(
-					app.Range(p.Imain).Slice(func(i int) app.UI {
-						return p.Imain[i]
-					}),
+					// Header and navbar
+					&header{},
+					app.Div().
+						Class("left").
+						Body(
+							&navbar{},
+							app.Range(p.IleftBar).Slice(func(i int) app.UI {
+								return p.IleftBar[i]
+							}),
+						),
+					app.Div().
+						Class("right").
+						Body(
+							app.Range(p.Imain).Slice(func(i int) app.UI {
+								return p.Imain[i]
+							}),
+						),
 				),
 		)
 }
