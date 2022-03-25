@@ -33,6 +33,7 @@ type guestbook struct {
 
 // TODO: The comments are loaded like 2 or 3 times every time the page is loaded...
 func (g *guestbook) OnMount(ctx app.Context) {
+	ctx.Handle("guestbook-loadcomments", g.onHandleLoadComments)
 	g.LoadComments(ctx)
 }
 
@@ -138,7 +139,8 @@ func (g guestbook) Render() app.UI {
 			ctx.Dispatch(func(ctx app.Context) {
 				g.clear()
 			})
-			g.LoadComments(ctx)
+			ctx.NewAction("guestbook-loadcomments")
+			//g.LoadComments(ctx)
 		}),
 		app.If(
 			g.gbModalOpen,
@@ -162,6 +164,7 @@ func (g guestbook) Render() app.UI {
 
 func (g *guestbook) LoadComments(ctx app.Context) {
 	// TODO: maybe you can put this in a localbrowser storage?
+	fmt.Printf("Called LoadComments()\n")
 	url := ApiURL + "/comment"
 	ctx.Async(func() {
 		res, err := http.Get(url)
@@ -189,6 +192,13 @@ func (g *guestbook) LoadComments(ctx app.Context) {
 func (g *guestbook) clear() {
 	g.name = ""
 	g.message = ""
+}
+
+func (g *guestbook) onHandleLoadComments(ctx app.Context, a app.Action) {
+	g.LoadComments(ctx)
+	ctx.Dispatch(func(ctx app.Context) {
+		g.Update()
+	})
 }
 
 type guestbookAlertModal struct {
