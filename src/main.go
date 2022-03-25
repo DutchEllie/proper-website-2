@@ -20,12 +20,11 @@ func main() {
 	aboutpage := NewAboutPage()
 	galaxiespage := NewGalaxiesPage()
 	undertalePage := NewUndertalePage()
-	emptyPage := NewEmptyPage()
 	app.Route("/", homepage)
 	app.Route("/about", aboutpage)
 	app.Route("/galaxies", galaxiespage)
 	app.Route("/undertale", undertalePage)
-	app.Route("/empty", emptyPage)
+	app.Route("/blog", NewBlogPage())
 
 	app.Handle(getHTML, handleGetHTML)
 

@@ -138,6 +138,15 @@ body {
 	margin-bottom: 5px;
 }
 
+.blogpost-bar {
+	
+}
+
+.blogpost-titles {
+	margin-left: 10px;
+	text-decoration: none;
+    color: rgb(252, 230, 255);
+}
 
 /*
 .content p {

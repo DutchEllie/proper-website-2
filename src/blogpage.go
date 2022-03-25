@@ -1,9 +1,16 @@
 package main
 
-import "github.com/maxence-charriere/go-app/v9/pkg/app"
+import (
+	"fmt"
+
+	"github.com/maxence-charriere/go-app/v9/pkg/app"
+)
 
 type BlogPage struct {
 	app.Compo
+
+	display         bool
+	currentPostPath string
 }
 
 // TODO: write the backend API for this
@@ -18,11 +25,30 @@ func NewBlogPage() *BlogPage {
 	return &BlogPage{}
 }
 
+func (b *BlogPage) OnMount(ctx app.Context) {
+	ctx.Handle("update-blogpost", b.onUpdateBlogPost)
+	b.display = false
+}
+
 func (b *BlogPage) Render() app.UI {
 	return newPage().
 		Title("Blog").
 		LeftBar(
-			newHTMLBlock().
-				Class("left leftbarblock"),
+			&blogLinks{},
+		).
+		Main(
+			app.If(b.display,
+				newHTMLBlock().
+					Class("right").
+					Class("contentblock").
+					Src(b.currentPostPath),
+			),
 		)
+}
+
+func (b *BlogPage) onUpdateBlogPost(ctx app.Context, a app.Action) {
+	fmt.Printf("Called the update-blogpost ActionHandler\n")
+	blogpost := a.Tags.Get("blogpost")
+	b.currentPostPath = blogpost
+	b.display = true
 }
