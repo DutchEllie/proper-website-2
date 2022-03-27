@@ -20,9 +20,10 @@ func (n *navbar) Render() app.UI {
 			app.Li().Body(
 				app.A().Href("/galaxies").Text("Galaxies"),
 			),
+			// Disabled for now since there are none anyway
 			app.Li().Body(
 				app.A().Href("/blog").Text("Blog"),
-			),
+			).Style("display", "none"),
 		),
 	).Class("navbar")
 }
