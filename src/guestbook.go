@@ -139,9 +139,7 @@ func (g guestbook) Render() app.UI {
 				return
 			}
 			g.OnSubmit(ctx, g.name, g.email, g.website, g.message)
-			ctx.Dispatch(func(ctx app.Context) {
-				g.clear()
-			})
+			g.clear()
 			ctx.NewAction("guestbook-loadcomments")
 			//g.LoadComments(ctx)
 		}),
@@ -166,6 +164,23 @@ func (g guestbook) Render() app.UI {
 }
 
 func (g *guestbook) SmartLoadComments(ctx app.Context) {
+	{
+		// Get the comments quickly to at least render something
+		tmpjsondata := make([]byte, 0)
+		err := ctx.LocalStorage().Get("comments", &tmpjsondata)
+		if err != nil {
+			app.Log(err)
+			return
+		}
+		ctx.Dispatch(func(ctx app.Context) {
+			err = json.Unmarshal(tmpjsondata, &g.comments)
+			if err != nil {
+				app.Log(err)
+				return
+			}
+		})
+		g.Update()
+	}
 	var lasthash []byte
 	err := ctx.LocalStorage().Get("lasthash", &lasthash)
 	if err != nil {
@@ -264,13 +279,13 @@ func (g *guestbook) LoadComments(ctx app.Context) {
 func (g *guestbook) clear() {
 	g.name = ""
 	g.message = ""
+	g.website = ""
+	g.email = ""
 }
 
 func (g *guestbook) onHandleLoadComments(ctx app.Context, a app.Action) {
 	g.SmartLoadComments(ctx)
-	ctx.Dispatch(func(ctx app.Context) {
-		g.Update()
-	})
+	g.Update()
 }
 
 type guestbookAlertModal struct {
