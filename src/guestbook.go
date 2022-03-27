@@ -1,6 +1,8 @@
 package main
 
 import (
+	"bytes"
+	"crypto/sha256"
 	"encoding/json"
 	"fmt"
 	"io"
@@ -21,6 +23,7 @@ type guestbook struct {
 	website string
 	message string
 
+	lastHash    [32]byte
 	gbModalOpen bool
 	OnSubmit    func(
 		ctx app.Context,
@@ -34,7 +37,7 @@ type guestbook struct {
 // TODO: The comments are loaded like 2 or 3 times every time the page is loaded...
 func (g *guestbook) OnMount(ctx app.Context) {
 	ctx.Handle("guestbook-loadcomments", g.onHandleLoadComments)
-	g.LoadComments(ctx)
+	ctx.NewAction("guestbook-loadcomments")
 }
 
 /*
@@ -162,6 +165,63 @@ func (g guestbook) Render() app.UI {
 	)
 }
 
+func (g *guestbook) SmartLoadComments(ctx app.Context) {
+	var lasthash []byte
+	err := ctx.LocalStorage().Get("lasthash", &lasthash)
+	if err != nil {
+		app.Log(err)
+		return
+	}
+
+	if lasthash == nil {
+		fmt.Printf("Program thinks lasthash is empty\n")
+		g.LoadComments(ctx)
+		return
+	}
+	url := ApiURL + "/commenthash"
+	ctx.Async(func() {
+		res, err := http.Get(url)
+		if err != nil {
+			app.Log(err)
+			return
+		}
+		defer res.Body.Close()
+
+		hash, err := io.ReadAll(res.Body)
+		if err != nil {
+			app.Log(err)
+			return
+		}
+
+		fmt.Printf("hash: %v\n", hash)
+		fmt.Printf("lasthash: %v\n", lasthash)
+
+		// If the hash is different, aka there was an update in the comments
+		if !bytes.Equal(hash, lasthash) {
+			fmt.Printf("Hash calculation is different\n")
+			g.LoadComments(ctx)
+			return
+		}
+
+		// if the hash is not different, then there is no need to load new comments
+		jsondata := make([]byte, 0)
+		err = ctx.LocalStorage().Get("comments", &jsondata)
+		if err != nil {
+			app.Log(err)
+			return
+		}
+		fmt.Printf("jsondata: %v\n", jsondata)
+		ctx.Dispatch(func(ctx app.Context) {
+			err = json.Unmarshal(jsondata, &g.comments)
+			if err != nil {
+				app.Log(err)
+				return
+			}
+		})
+		return
+	})
+}
+
 func (g *guestbook) LoadComments(ctx app.Context) {
 	// TODO: maybe you can put this in a localbrowser storage?
 	fmt.Printf("Called LoadComments()\n")
@@ -186,6 +246,18 @@ func (g *guestbook) LoadComments(ctx app.Context) {
 				return
 			}
 		})
+
+		ctx.LocalStorage().Set("comments", jsondata)
+		// Calculating the hash
+		fmt.Printf("Calculating the hash from LoadComments\n")
+		hash := sha256.Sum256(jsondata)
+		fmt.Printf("hash fresh from calculation: %v\n", hash)
+		//g.lastHash = hash
+		err = ctx.LocalStorage().Set("lasthash", []byte(fmt.Sprintf("%x\n", hash)))
+		if err != nil {
+			app.Log(err)
+			return
+		}
 	})
 }
 
@@ -195,7 +267,7 @@ func (g *guestbook) clear() {
 }
 
 func (g *guestbook) onHandleLoadComments(ctx app.Context, a app.Action) {
-	g.LoadComments(ctx)
+	g.SmartLoadComments(ctx)
 	ctx.Dispatch(func(ctx app.Context) {
 		g.Update()
 	})

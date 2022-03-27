@@ -55,7 +55,10 @@ func (p *Homepage) Render() app.UI {
 							}
 							url := ApiURL + "/comment"
 
-							ctx.Async(func() {
+							// This is not Async'ed, because otherwise you run into a race
+							// condition where you reload the comments before the server had time
+							// to process the request!
+							{
 								req, err := http.Post(url, "application/json", bytes.NewBuffer(jsondata))
 								if err != nil {
 									fmt.Printf("err: %v\n", err)
@@ -65,7 +68,7 @@ func (p *Homepage) Render() app.UI {
 									p.Update()
 								}
 								defer req.Body.Close()
-							})
+							}
 						},
 					},
 				),
