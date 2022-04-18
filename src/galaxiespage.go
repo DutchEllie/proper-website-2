@@ -1,12 +1,6 @@
 package main
 
 import (
-	"bytes"
-	"encoding/json"
-	"fmt"
-	"io"
-	"net/http"
-
 	"github.com/maxence-charriere/go-app/v9/pkg/app"
 )
 
@@ -108,42 +102,20 @@ on their websites as well!`),
 												),
 											app.Li().
 												Body(
-													app.Div().
-														Body(
-															app.A().
-																Href("https://www.gnu.org").
-																Class("p-h3").
-																Class("m-t5").
+													newLinkWithStatus().
+														Link("https://www.gnu.org").
+														LinkBody(
+															newTextWithTooltip().
 																Text("The GNU Project").
-																OnMouseOver(func(ctx app.Context, e app.Event) {
-																	f.gnuOver = true
-																}).
-																OnMouseOut(func(ctx app.Context, e app.Event) {
-																	f.gnuOver = false
-																}).
-																OnMouseMove(func(ctx app.Context, e app.Event) {
-																	f.mousex, f.mousey = app.Window().CursorPosition()
-																}),
-															app.If(f.gnuOver,
-																app.Img().
-																	Src("/web/static/images/gnu-head-sm.png").
-																	Style("position", "fixed").
-																	Style("overflow", "hidden").
-																	Style("top", fmt.Sprintf("%dpx", f.mousey+20)).
-																	Style("left", fmt.Sprintf("%dpx", f.mousex+20)).
-																	Width(129).
-																	Height(122).
-																	Alt("GNU"),
-															),
-															app.Div().
-																Style("display", "flex").
-																Style("gap", "5px").
-																Body(
-																	app.P().
-																		Class("m-t5").
-																		Text("The official website of the GNU project. They advocate for free/libre software. This is not to be confused with 'open source' software. I highly recommend you read about them and their efforts."),
+																Tooltip(
+																	app.Img().
+																		Src("/web/static/images/gnu-head-sm.png").
+																		Width(129).
+																		Height(122).
+																		Alt("GNU"),
 																),
-														),
+														).
+														Text("The official website of the GNU project. They advocate for free/libre software. This is not to be confused with 'open source' software. I highly recommend you read about them and their efforts."),
 												),
 										),
 								),
@@ -156,119 +128,3 @@ on their websites as well!`),
 func (f *GalaxiesPage) onMouseOverGnu(ctx app.Context, e app.Event) {
 
 }*/
-
-//#################################
-//##                            ###
-//## Link with status component ###
-//##                            ###
-//#################################
-
-type linkWithStatus struct {
-	app.Compo
-
-	Ilink     string
-	IText     string
-	ILinkText string
-	status    bool
-}
-
-func newLinkWithStatus() *linkWithStatus {
-	return &linkWithStatus{}
-}
-
-func (f *linkWithStatus) Link(s string) *linkWithStatus {
-	f.Ilink = s
-	return f
-}
-
-func (f *linkWithStatus) LinkText(s string) *linkWithStatus {
-	f.ILinkText = s
-	return f
-}
-
-func (f *linkWithStatus) Text(s string) *linkWithStatus {
-	f.IText = s
-	return f
-}
-
-func (f *linkWithStatus) checkStatus(ctx app.Context) {
-	ctx.Async(func() {
-		data := struct {
-			Url string `json:"url"`
-		}{
-			Url: f.Ilink,
-		}
-		jsondata, err := json.Marshal(data)
-		if err != nil {
-			app.Log(err)
-			return
-		}
-
-		req, err := http.NewRequest("POST", ApiURL+"/checkonline", bytes.NewBuffer(jsondata))
-		if err != nil {
-			app.Log(err)
-			return
-		}
-		resp, err := http.DefaultClient.Do(req)
-		if err != nil {
-			app.Log(err)
-			return
-		}
-		defer resp.Body.Close()
-
-		body, err := io.ReadAll(resp.Body)
-		if err != nil {
-			app.Log(err)
-			return
-		}
-
-		jsonresp := struct {
-			Status bool `json:"status"`
-		}{}
-		err = json.Unmarshal(body, &jsonresp)
-		if err != nil {
-			app.Log(err)
-			return
-		}
-
-		ctx.Dispatch(func(ctx app.Context) {
-			f.status = jsonresp.Status
-		})
-	})
-}
-
-func (f *linkWithStatus) OnNav(ctx app.Context) {
-	f.checkStatus(ctx)
-}
-
-func (f *linkWithStatus) Render() app.UI {
-	return app.Div().
-		Body(
-			app.Div().
-				Style("display", "flex").
-				Style("gap", "20px").
-				Body(
-					app.A().
-						Href(f.Ilink).
-						Class("p-h3").
-						Class("m-t5").
-						Text(f.ILinkText),
-					app.If(f.status,
-						app.P().
-							Style("color", "green").
-							Style("width", "fit-content").
-							Style("margin", "5px 0px 0px 0px").
-							Text("Online"),
-					).Else(
-						app.P().
-							Style("color", "red").
-							Style("width", "fit-content").
-							Style("margin", "5px 0px 0px 0px").
-							Text("Offline"),
-					),
-				),
-			app.P().
-				Class("m-t5").
-				Text(f.IText),
-		)
-}
