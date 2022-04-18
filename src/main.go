@@ -70,9 +70,9 @@ func main() {
 			"/web/static/images/kanata-1.gif",
 			"/web/static/images/rin-1.gif",
 			"/web/static/images/rin-2.gif",
+			"/web/static/images/gnu-head-sm.png",
 			// Pages
 			"/web/blocks/pages/about.html",
-			"/web/blocks/pages/galaxies.html",
 			"/web/blocks/pages/intro.html",
 			"/web/blocks/snippets/bannerpanel.html",
 		},
