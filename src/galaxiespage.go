@@ -1,7 +1,11 @@
 package main
 
 import (
+	"bytes"
+	"encoding/json"
 	"fmt"
+	"io"
+	"net/http"
 
 	"github.com/maxence-charriere/go-app/v9/pkg/app"
 )
@@ -60,45 +64,24 @@ on their websites as well!`),
 										Body(
 											app.Li().
 												Body(
-													app.Div().
-														Body(
-															app.A().
-																Href("https://forestofunix.xyz").
-																Class("p-h3").
-																Class("m-t5").
-																Text("Forest of Unix"),
-															app.P().
-																Class("m-t5").
-																Text("A website made by Sebastiaan. A massive Linux fanboy, runs Gentoo on his ThinkPad. Absolutely based."),
-														),
+													newLinkWithStatus().
+														Link("https://forestofunix.xyz").
+														LinkText("Forest of Unix").
+														Text("A website made by Sebastiaan. A massive Linux fanboy, runs Gentoo on his ThinkPad. Absolutely based."),
 												),
 											app.Li().
 												Body(
-													app.Div().
-														Body(
-															app.A().
-																Href("https://nymphali.neocities.org").
-																Class("p-h3").
-																Class("m-t5").
-																Text("Nymphali"),
-															app.P().
-																Class("m-t5").
-																Text("The website made by ■■■■■■, whoops Nymphali. They have an awesome minimalist website that's just lovely."),
-														),
+													newLinkWithStatus().
+														Link("https://nymphali.neocities.org").
+														LinkText("Nymphali").
+														Text("The website made by ■■■■■■, whoops Nymphali. They have an awesome minimalist website that's just lovely."),
 												),
 											app.Li().
 												Body(
-													app.Div().
-														Body(
-															app.A().
-																Href("https://kristypixel.neocities.org").
-																Class("p-h3").
-																Class("m-t5").
-																Text("Kristy"),
-															app.P().
-																Class("m-t5").
-																Text("Website made by Kristy. Very cute website, I love it! Keep up the awesome work!"),
-														),
+													newLinkWithStatus().
+														Link("https://kristypixel.neocities.org").
+														LinkText("Kristypixel").
+														Text("Website made by Kristy. Very cute website, I love it! Keep up the awesome work!"),
 												),
 										),
 								),
@@ -118,17 +101,10 @@ on their websites as well!`),
 										Body(
 											app.Li().
 												Body(
-													app.Div().
-														Body(
-															app.A().
-																Href("https://evillious.ylimegirl.com").
-																Class("p-h3").
-																Class("m-t5").
-																Text("Evillious Chronicles fan guide"),
-															app.P().
-																Class("m-t5").
-																Text("A VERY cool website made by Ylimegirl! They wrote a whole website dedicated to Evillious Chronicles, which is a super good Japanese light novel and vocaloid series!! Definitely look it up!"),
-														),
+													newLinkWithStatus().
+														Link("https://evillious.ylimegirl.com").
+														LinkText("Evillious Chronicles fan guide").
+														Text("A VERY cool website made by Ylimegirl! They wrote a whole website dedicated to Evillious Chronicles, which is a super good Japanese light novel and vocaloid series!! Definitely look it up!"),
 												),
 											app.Li().
 												Body(
@@ -180,3 +156,119 @@ on their websites as well!`),
 func (f *GalaxiesPage) onMouseOverGnu(ctx app.Context, e app.Event) {
 
 }*/
+
+//#################################
+//##                            ###
+//## Link with status component ###
+//##                            ###
+//#################################
+
+type linkWithStatus struct {
+	app.Compo
+
+	Ilink     string
+	IText     string
+	ILinkText string
+	status    bool
+}
+
+func newLinkWithStatus() *linkWithStatus {
+	return &linkWithStatus{}
+}
+
+func (f *linkWithStatus) Link(s string) *linkWithStatus {
+	f.Ilink = s
+	return f
+}
+
+func (f *linkWithStatus) LinkText(s string) *linkWithStatus {
+	f.ILinkText = s
+	return f
+}
+
+func (f *linkWithStatus) Text(s string) *linkWithStatus {
+	f.IText = s
+	return f
+}
+
+func (f *linkWithStatus) checkStatus(ctx app.Context) {
+	ctx.Async(func() {
+		data := struct {
+			Url string `json:"url"`
+		}{
+			Url: f.Ilink,
+		}
+		jsondata, err := json.Marshal(data)
+		if err != nil {
+			app.Log(err)
+			return
+		}
+
+		req, err := http.NewRequest("POST", ApiURL+"/checkonline", bytes.NewBuffer(jsondata))
+		if err != nil {
+			app.Log(err)
+			return
+		}
+		resp, err := http.DefaultClient.Do(req)
+		if err != nil {
+			app.Log(err)
+			return
+		}
+		defer resp.Body.Close()
+
+		body, err := io.ReadAll(resp.Body)
+		if err != nil {
+			app.Log(err)
+			return
+		}
+
+		jsonresp := struct {
+			Status bool `json:"status"`
+		}{}
+		err = json.Unmarshal(body, &jsonresp)
+		if err != nil {
+			app.Log(err)
+			return
+		}
+
+		ctx.Dispatch(func(ctx app.Context) {
+			f.status = jsonresp.Status
+		})
+	})
+}
+
+func (f *linkWithStatus) OnNav(ctx app.Context) {
+	f.checkStatus(ctx)
+}
+
+func (f *linkWithStatus) Render() app.UI {
+	return app.Div().
+		Body(
+			app.Div().
+				Style("display", "flex").
+				Style("gap", "20px").
+				Body(
+					app.A().
+						Href(f.Ilink).
+						Class("p-h3").
+						Class("m-t5").
+						Text(f.ILinkText),
+					app.If(f.status,
+						app.P().
+							Style("color", "green").
+							Style("width", "fit-content").
+							Style("margin", "5px 0px 0px 0px").
+							Text("Online"),
+					).Else(
+						app.P().
+							Style("color", "red").
+							Style("width", "fit-content").
+							Style("margin", "5px 0px 0px 0px").
+							Text("Offline"),
+					),
+				),
+			app.P().
+				Class("m-t5").
+				Text(f.IText),
+		)
+}
