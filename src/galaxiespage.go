@@ -61,7 +61,7 @@ on their websites as well!`),
 													newLinkWithStatus().
 														Link("https://forestofunix.xyz").
 														LinkText("Forest of Unix").
-														Text("A website made by Sebastiaan. A massive Linux fanboy, runs Gentoo on his ThinkPad. Absolutely based."),
+														Text("A website made by Sebastiaan. A massive Linux fanboy, runs Gentoo on his ThinkPad. Absolutely based. His website is written in Lisp, that's why it's often offline. That was the inspiration for the online/offline status text."),
 												),
 											app.Li().
 												Body(
