@@ -208,8 +208,8 @@ func (g *guestbook) SmartLoadComments(ctx app.Context) {
 			return
 		}
 
-		fmt.Printf("hash: %v\n", hash)
-		fmt.Printf("lasthash: %v\n", lasthash)
+		//fmt.Printf("hash: %v\n", hash)
+		//fmt.Printf("lasthash: %v\n", lasthash)
 
 		// If the hash is different, aka there was an update in the comments
 		if !bytes.Equal(hash, lasthash) {
@@ -225,7 +225,7 @@ func (g *guestbook) SmartLoadComments(ctx app.Context) {
 			app.Log(err)
 			return
 		}
-		fmt.Printf("jsondata: %v\n", jsondata)
+		//fmt.Printf("jsondata: %v\n", jsondata)
 		ctx.Dispatch(func(ctx app.Context) {
 			err = json.Unmarshal(jsondata, &g.comments)
 			if err != nil {
@@ -239,7 +239,7 @@ func (g *guestbook) SmartLoadComments(ctx app.Context) {
 
 func (g *guestbook) LoadComments(ctx app.Context) {
 	// TODO: maybe you can put this in a localbrowser storage?
-	fmt.Printf("Called LoadComments()\n")
+	//fmt.Printf("Called LoadComments()\n")
 	url := ApiURL + "/comment"
 	ctx.Async(func() {
 		res, err := http.Get(url)
@@ -264,9 +264,9 @@ func (g *guestbook) LoadComments(ctx app.Context) {
 
 		ctx.LocalStorage().Set("comments", jsondata)
 		// Calculating the hash
-		fmt.Printf("Calculating the hash from LoadComments\n")
+		//fmt.Printf("Calculating the hash from LoadComments\n")
 		hash := sha256.Sum256(jsondata)
-		fmt.Printf("hash fresh from calculation: %v\n", hash)
+		//fmt.Printf("hash fresh from calculation: %v\n", hash)
 		//g.lastHash = hash
 		err = ctx.LocalStorage().Set("lasthash", []byte(fmt.Sprintf("%x\n", hash)))
 		if err != nil {
