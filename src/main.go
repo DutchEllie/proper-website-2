@@ -20,11 +20,13 @@ func main() {
 	aboutpage := NewAboutPage()
 	galaxiespage := NewGalaxiesPage()
 	undertalePage := NewUndertalePage()
+	musicPage := NewMusicPage()
 	app.Route("/", homepage)
 	app.Route("/about", aboutpage)
 	app.Route("/galaxies", galaxiespage)
 	app.Route("/undertale", undertalePage)
 	app.Route("/blog", NewBlogPage())
+	app.Route("/music", musicPage)
 
 	app.Handle(getHTML, handleGetHTML)
 
