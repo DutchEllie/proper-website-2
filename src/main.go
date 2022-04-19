@@ -77,6 +77,8 @@ func main() {
 			"/web/blocks/pages/about.html",
 			"/web/blocks/pages/intro.html",
 			"/web/blocks/snippets/bannerpanel.html",
+			// Music
+			"https://music-website.s3.nl-ams.scw.cloud/Tokusya-Seizon%20Wonder-la-der%21%21.mp3",
 		},
 	}
 
