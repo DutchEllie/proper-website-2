@@ -79,6 +79,7 @@ func main() {
 			"/web/blocks/snippets/bannerpanel.html",
 			// Music
 			"https://music-website.s3.nl-ams.scw.cloud/Tokusya-Seizon%20Wonder-la-der%21%21.mp3",
+			"https://music-website.s3.nl-ams.scw.cloud/kegarenaki-barajuuji.mp3",
 		},
 	}
 

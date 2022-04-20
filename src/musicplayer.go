@@ -63,6 +63,10 @@ func (f *musicPlayer) OnMount(ctx app.Context) {
 		Title("Tokusya-Seizon Wonder-la-der!! - Amane Kanata").
 		URL("https://music-website.s3.nl-ams.scw.cloud/Tokusya-Seizon%20Wonder-la-der%21%21.mp3").
 		ID("tokusya-seizon")
+	f.songs["kegarenaki-barajuuji"] = newSong().
+		Title("Kegarenaki Barajuuji - Ariabl'eyeS").
+		URL("https://music-website.s3.nl-ams.scw.cloud/kegarenaki-barajuuji.mp3").
+		ID("kegarenaki-barajuuji")
 
 }
 
