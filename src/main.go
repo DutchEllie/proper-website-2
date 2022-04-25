@@ -80,6 +80,7 @@ func main() {
 			// Music
 			"https://music-website.s3.nl-ams.scw.cloud/Tokusya-Seizon%20Wonder-la-der%21%21.mp3",
 			"https://music-website.s3.nl-ams.scw.cloud/kegarenaki-barajuuji.mp3",
+			"https://music-website.s3.nl-ams.scw.cloud/error-towa.mp3",
 		},
 	}
 
