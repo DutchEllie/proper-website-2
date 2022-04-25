@@ -67,6 +67,10 @@ func (f *musicPlayer) OnMount(ctx app.Context) {
 		Title("Kegarenaki Barajuuji - Ariabl'eyeS").
 		URL("https://music-website.s3.nl-ams.scw.cloud/kegarenaki-barajuuji.mp3").
 		ID("kegarenaki-barajuuji")
+	f.songs["error-towa"] = newSong().
+		Title("-ERROR (Cover) - Tokoyami Towa").
+		URL("https://music-website.s3.nl-ams.scw.cloud/error-towa.mp3").
+		ID("error-towa")
 
 }
 
