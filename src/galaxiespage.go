@@ -77,6 +77,13 @@ on their websites as well!`),
 														LinkText("Kristypixel").
 														Text("Website made by Kristy. Very cute website, I love it! Keep up the awesome work!"),
 												),
+											app.Li().
+												Body(
+													newLinkWithStatus().
+														Link("https://leftonred.neocities.org").
+														LinkText("Left on Red").
+														Text("Kyu made this website, he's a friend of mine as well! Still very new, but their dark mode design is very cool!"),
+												),
 										),
 								),
 							app.Div().
