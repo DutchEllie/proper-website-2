@@ -1,6 +1,6 @@
 # proper-website-2
 
-[![Build Status](https://drone.dutchellie.nl/api/badges/DutchEllie/proper-website-2/status.svg)](https://drone.nicecock.eu/DutchEllie/proper-website-2)
+[![Build Status](https://drone.dutchellie.nl/api/badges/DutchEllie/proper-website-2/status.svg)](https://drone.dutchellie.nl/DutchEllie/proper-website-2)
 
 A truly proper website this time™
 
