@@ -1,24 +1,53 @@
 kind: pipeline
 type: kubernetes
-name: default
+name: staging
 
 trigger:
   event:
     - push
 
-# STAGING!!!!!!!!!!!!!
+# STAGING!!!!
 steps:
-- name: docker
+- name: build-wasm
+  image: golang:1.17.8-alpine
+  volumes:
+    - name: build
+      path: /drone/src/build
+  environment:
+    APIURL: https://api.quenten.nl/api/testing
+  commands:
+    - mkdir ./build/web
+    - GOARCH=wasm GOOS=js go build -o ./build/web/app.wasm -ldflags="-X 'main.ApiURL=$APIURL'" ./src
+- name: build-server
+  image: golang:1.17.8-alpine
+  volumes:
+    - name: build
+      path: /drone/src/build
+  environment:
+    APIURL: https://api.quenten.nl/api/testing
+  commands:
+    - go build -o ./build/app -ldflags="-X 'main.ApiURL=$APIURL'" ./src
+- name: build-publish-image
   image: plugins/docker
+  privileged: true
+  volumes:
+    - name: build
+      path: /drone/src/build
   settings:
-    username: 
+    cache_from:
+      - "dutchellie/proper-website-2:dev"
+    username:
       from_secret: docker_username
     password:
       from_secret: docker_password
+    dockerfile: Dockerfile
     repo: dutchellie/proper-website-2
-    tags: 
+    tags:
       - dev
       - ${DRONE_COMMIT_SHA:0:8}
+  depends_on:
+    - build-wasm
+    - build-server
 - name: deploy-staging
   image: pelotech/drone-helm3
   settings:
@@ -28,7 +57,6 @@ steps:
     release: newsite-staging
     skip_tls_verify: true
     values_files:
-#      - .drone/helm/values.yaml
       - .drone/helm/staging-val.yaml
     values:
       - "image=dutchellie/proper-website-2:${DRONE_COMMIT_SHA:0:8}"
