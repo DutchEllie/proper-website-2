@@ -71,6 +71,10 @@ steps:
   depends_on:
     - build-publish-image
 
+volumes:
+  - name: build
+    temp: {}
+
 ---
 
 kind: pipeline
