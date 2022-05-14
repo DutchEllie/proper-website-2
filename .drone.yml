@@ -79,7 +79,7 @@ volumes:
 
 kind: pipeline
 type: kubernetes
-name: deploy-prod
+name: production
 
 trigger:
   event:
@@ -87,18 +87,48 @@ trigger:
   target:
     - production
 
+# PRODUCTION!!!!
 steps:
-- name: docker
+- name: build-wasm
+  image: golang:1.17.8-alpine
+  volumes:
+    - name: build
+      path: /drone/src/build
+  environment:
+    APIURL: https://api.quenten.nl/api
+  commands:
+    - mkdir ./build/web
+    - GOARCH=wasm GOOS=js go build -o ./build/web/app.wasm -ldflags="-X 'main.ApiURL=$APIURL'" ./src
+- name: build-server
+  image: golang:1.17.8-alpine
+  volumes:
+    - name: build
+      path: /drone/src/build
+  environment:
+    APIURL: https://api.quenten.nl/api
+  commands:
+    - go build -o ./build/app -ldflags="-X 'main.ApiURL=$APIURL'" ./src
+- name: build-publish-image
   image: plugins/docker
+  privileged: true
+  volumes:
+    - name: build
+      path: /drone/src/build
   settings:
-    username: 
+    cache_from:
+      - "dutchellie/proper-website-2:latest"
+    username:
       from_secret: docker_username
-    password: 
+    password:
       from_secret: docker_password
+    dockerfile: Dockerfile
     repo: dutchellie/proper-website-2
-    tags: 
+    tags:
       - latest
       - ${DRONE_COMMIT_SHA:0:8}
+  depends_on:
+    - build-wasm
+    - build-server
 - name: deploy-production
   image: pelotech/drone-helm3
   settings:
@@ -108,7 +138,6 @@ steps:
     release: newsite-production
     skip_tls_verify: true
     values_files:
-#      - .drone/helm/values.yaml
       - .drone/helm/prod-val.yaml
     values:
       - "image=dutchellie/proper-website-2:${DRONE_COMMIT_SHA:0:8}"
@@ -120,3 +149,9 @@ steps:
       from_secret: prod_kube_certificate
     kube_service_account: drone-deploy
     dry_run: false
+  depends_on:
+    - build-publish-image
+
+volumes:
+  - name: build
+    temp: {}
