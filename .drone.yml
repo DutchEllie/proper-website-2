@@ -15,6 +15,7 @@ steps:
       path: /drone/src/build
   environment:
     APIURL: https://api.quenten.nl/api/testing
+    CGO_ENABLED: 0
   commands:
     - mkdir ./build/web
     - GOARCH=wasm GOOS=js go build -o ./build/web/app.wasm -ldflags="-X 'main.ApiURL=$APIURL'" ./src
@@ -25,6 +26,7 @@ steps:
       path: /drone/src/build
   environment:
     APIURL: https://api.quenten.nl/api/testing
+    CGO_ENABLED: 0
   commands:
     - go build -o ./build/app -ldflags="-X 'main.ApiURL=$APIURL'" ./src
 - name: build-publish-image
@@ -96,6 +98,7 @@ steps:
       path: /drone/src/build
   environment:
     APIURL: https://api.quenten.nl/api
+    CGO_ENABLED: 0
   commands:
     - mkdir ./build/web
     - GOARCH=wasm GOOS=js go build -o ./build/web/app.wasm -ldflags="-X 'main.ApiURL=$APIURL'" ./src
@@ -106,6 +109,7 @@ steps:
       path: /drone/src/build
   environment:
     APIURL: https://api.quenten.nl/api
+    CGO_ENABLED: 0
   commands:
     - go build -o ./build/app -ldflags="-X 'main.ApiURL=$APIURL'" ./src
 - name: build-publish-image
