@@ -1,4 +1,7 @@
 name: newsite-prod
+containerEnv:
+  - name: APIURL
+    value: https://api.quenten.nl/api
 service:
   name: newsite-prod
 ingress:

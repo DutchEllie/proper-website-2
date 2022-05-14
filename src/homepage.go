@@ -10,10 +10,6 @@ import (
 	"github.com/maxence-charriere/go-app/v9/pkg/app"
 )
 
-var (
-	ApiURL string
-)
-
 type Homepage struct {
 	app.Compo
 }

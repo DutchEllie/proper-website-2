@@ -1,4 +1,7 @@
 name: newsite-staging
+containerEnv:
+  - name: APIURL
+    value: https://api.quenten.nl/api/testing
 service:
   name: newsite-staging
 ingress:

@@ -16,8 +16,6 @@ steps:
     password:
       from_secret: docker_password
     repo: dutchellie/proper-website-2
-    build_args:
-      - APIURL=https://api.quenten.nl/api/testing
     tags: 
       - dev
       - ${DRONE_COMMIT_SHA:0:8}
@@ -64,8 +62,6 @@ steps:
     password: 
       from_secret: docker_password
     repo: dutchellie/proper-website-2
-    build_args:
-      - APIURL=https://api.quenten.nl/api
     tags: 
       - latest
       - ${DRONE_COMMIT_SHA:0:8}

@@ -4,6 +4,7 @@ import (
 	"compress/gzip"
 	"log"
 	"net/http"
+	"os"
 
 	"github.com/gorilla/handlers"
 	"github.com/maxence-charriere/go-app/v9/pkg/app"
@@ -15,7 +16,15 @@ import (
 //	collection *mongo.Collection
 //}
 
+var (
+	ApiURL string
+)
+
 func main() {
+	ApiURL = os.Getenv("APIURL")
+	if ApiURL == "" {
+		log.Fatalln("Unable to get API URL from environment variables!")
+	}
 	homepage := NewHomepage()
 	aboutpage := NewAboutPage()
 	galaxiespage := NewGalaxiesPage()

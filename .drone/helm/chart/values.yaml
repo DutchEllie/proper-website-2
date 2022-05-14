@@ -6,6 +6,7 @@ podAnnotations: {}
 containerName: newsite
 image: dutchellie/proper-website-2:latest
 imagePullPolicy: Always
+containerEnv: []
 
 service:
   name: newsite-service

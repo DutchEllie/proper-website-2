@@ -31,5 +31,9 @@ spec:
           ports:
             - name: http
               containerPort: 8000
+        {{- if .Values.containerEnv }}
+          env: {{ toYaml .Values.containerEnv | nindent 12 }}
+        {{- end }}
+
 
       
