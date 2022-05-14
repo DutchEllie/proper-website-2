@@ -71,7 +71,14 @@ func (f *musicPlayer) OnMount(ctx app.Context) {
 		Title("-ERROR (Cover) - Tokoyami Towa").
 		URL("https://music-website.s3.nl-ams.scw.cloud/error-towa.mp3").
 		ID("error-towa")
-
+	f.songs["diamond-city-lights"] = newSong().
+		Title("Diamond City Lights - LazuLight").
+		URL("https://music-website.s3.nl-ams.scw.cloud/diamond-city-lights-lazulight.opus").
+		ID("diamond-city-lights")
+	f.songs["tsunami-finana"] = newSong().
+		Title("TSUNAMI - Finana Ryugu").
+		URL("https://music-website.s3.nl-ams.scw.cloud/tsunami-finana.opus").
+		ID("tsunami-finana")
 }
 
 // Action handlers
