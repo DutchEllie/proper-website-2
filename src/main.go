@@ -4,7 +4,6 @@ import (
 	"compress/gzip"
 	"log"
 	"net/http"
-	"os"
 
 	"github.com/gorilla/handlers"
 	"github.com/maxence-charriere/go-app/v9/pkg/app"
@@ -15,10 +14,6 @@ import (
 //	database   *mongo.Database
 //	collection *mongo.Collection
 //}
-
-var (
-	ApiURL string
-)
 
 func main() {
 	homepage := NewHomepage()
@@ -39,11 +34,6 @@ func main() {
 	// It handles client side stuff
 	// It exits immediately on the server side
 	app.RunWhenOnBrowser()
-
-	ApiURL = os.Getenv("APIURL")
-	if ApiURL == "" {
-		log.Fatalln("Unable to get API URL from environment variables!")
-	}
 
 	icon := &app.Icon{
 		Default: "/web/static/images/icon-small.png",
