@@ -21,10 +21,6 @@ var (
 )
 
 func main() {
-	ApiURL = os.Getenv("APIURL")
-	if ApiURL == "" {
-		log.Fatalln("Unable to get API URL from environment variables!")
-	}
 	homepage := NewHomepage()
 	aboutpage := NewAboutPage()
 	galaxiespage := NewGalaxiesPage()
@@ -43,6 +39,11 @@ func main() {
 	// It handles client side stuff
 	// It exits immediately on the server side
 	app.RunWhenOnBrowser()
+
+	ApiURL = os.Getenv("APIURL")
+	if ApiURL == "" {
+		log.Fatalln("Unable to get API URL from environment variables!")
+	}
 
 	icon := &app.Icon{
 		Default: "/web/static/images/icon-small.png",
