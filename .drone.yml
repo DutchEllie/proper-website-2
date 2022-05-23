@@ -11,7 +11,7 @@ steps:
 - name: build-wasm
   image: golang:1.17.8-alpine
   volumes:
-    - name: build
+    - name: build-staging
       path: /drone/src/build
   environment:
     APIURL: https://api.quenten.nl/api/testing
@@ -22,7 +22,7 @@ steps:
 - name: build-server
   image: golang:1.17.8-alpine
   volumes:
-    - name: build
+    - name: build-staging
       path: /drone/src/build
   environment:
     APIURL: https://api.quenten.nl/api/testing
@@ -33,7 +33,7 @@ steps:
   image: plugins/docker
   privileged: true
   volumes:
-    - name: build
+    - name: build-staging
       path: /drone/src/build
   settings:
     cache_from:
@@ -74,7 +74,7 @@ steps:
     - build-publish-image
 
 volumes:
-  - name: build
+  - name: build-staging
     temp: {}
 
 ---
