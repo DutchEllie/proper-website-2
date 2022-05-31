@@ -4,6 +4,7 @@ import (
 	"compress/gzip"
 	"log"
 	"net/http"
+	"os"
 
 	"github.com/gorilla/handlers"
 	"github.com/maxence-charriere/go-app/v9/pkg/app"
@@ -89,6 +90,9 @@ func main() {
 	app.GenerateStaticWebsite("./staticsite", handler)
 	compressed := handlers.CompressHandlerLevel(handler, gzip.BestSpeed)
 	http.Handle("/", compressed)
+	if os.Getenv("GEN_STATIC_SITE") == "true" {
+		return
+	}
 
 	if err := http.ListenAndServe(":8000", nil); err != nil {
 		log.Fatal(err)
