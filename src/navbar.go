@@ -4,8 +4,13 @@ import "github.com/maxence-charriere/go-app/v9/pkg/app"
 
 type navbar struct {
 	app.Compo
+	updateAvailable bool
 
 	OnClickButton func(page string)
+}
+
+func (n *navbar) OnAppUpdate(ctx app.Context) {
+	n.updateAvailable = ctx.AppUpdateAvailable()
 }
 
 func (n *navbar) Render() app.UI {
@@ -28,5 +33,21 @@ func (n *navbar) Render() app.UI {
 				app.A().Href("/blog").Text("Blog"),
 			).Style("display", "none"),
 		),
+		app.If(n.updateAvailable,
+			app.Div().Body(
+				app.Img().
+					Src("/web/static/images/hot1.gif").
+					Class("update-img"),
+				app.Span().
+					Text("Update available! Click here to update!").
+					Class("update-text"),
+			).
+				Class("update-div").
+				OnClick(n.onUpdateClick),
+		),
 	).Class("navbar")
+}
+
+func (n *navbar) onUpdateClick(ctx app.Context, e app.Event) {
+	ctx.Reload()
 }

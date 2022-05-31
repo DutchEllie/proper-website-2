@@ -35,12 +35,22 @@ body {
 	height: 100%;
 }
 
-.update-box {
-	position:absolute;
-	max-width: 100px;
-	top: 0px;
-	right: 0px;
+.update-div {
 	font-size: 0.8rem;
+	display: flex;
+}
+
+.update-div:hover {
+	cursor: pointer;
+}
+
+.update-text {
+	align-self: center;
+	flex: 70%;
+}
+
+.update-img {
+	flex: 30%;
 }
 
 .main {
