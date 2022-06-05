@@ -44,6 +44,10 @@ body {
 	cursor: pointer;
 }
 
+.finger-hover:hover {
+	cursor: pointer;
+}
+
 .update-text {
 	align-self: center;
 	flex: 70%;

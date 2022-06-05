@@ -113,6 +113,7 @@ func (f *musicPlayer) Render() app.UI {
 							app.Span().
 								Style("text-decoration", "underline").
 								Style("width", "fit-content").
+								Class("finger-hover").
 								Text(f.songs[s].ITitle).
 								OnClick(func(ctx app.Context, e app.Event) {
 									ctx.NewActionWithValue("switchSong", f.songs[s].IID)
