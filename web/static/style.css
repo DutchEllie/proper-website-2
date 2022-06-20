@@ -360,7 +360,7 @@ div.comment-message p{
 
 @media only screen and (max-width: 914px) {
 	.header {
-		font-size: 3em;
+		font-size: 10vw;
 	}
   .main {
 		padding-left: 5px; 

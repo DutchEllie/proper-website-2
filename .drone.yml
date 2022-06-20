@@ -45,8 +45,7 @@ steps:
     dockerfile: Dockerfile
     repo: dutchellie/proper-website-2
     tags:
-      - dev
-      - ${DRONE_COMMIT_SHA:0:8}
+      - dev-${DRONE_COMMIT_SHA:0:8}
   depends_on:
     - build-wasm
     - build-server
@@ -128,8 +127,7 @@ steps:
     dockerfile: Dockerfile
     repo: dutchellie/proper-website-2
     tags:
-      - latest
-      - ${DRONE_COMMIT_SHA:0:8}
+      - latest-${DRONE_COMMIT_SHA:0:8}
   depends_on:
     - build-wasm
     - build-server
