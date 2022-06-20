@@ -60,7 +60,7 @@ steps:
     values_files:
       - .drone/helm/staging-val.yaml
     values:
-      - "image=dutchellie/proper-website-2:dev"
+      - "image=dutchellie/proper-website-2:dev-${DRONE_COMMIT_SHA:0:8}"
     kube_api_server:
       from_secret: staging_api_server
     kube_token:
@@ -142,7 +142,7 @@ steps:
     values_files:
       - .drone/helm/prod-val.yaml
     values:
-      - "image=dutchellie/proper-website-2:latest"
+      - "image=dutchellie/proper-website-2:latest-${DRONE_COMMIT_SHA:0:8}"
     kube_api_server:
       from_secret: prod_api_server
     kube_token:
