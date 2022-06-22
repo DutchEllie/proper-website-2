@@ -39,22 +39,23 @@ func (m *menu) Render() app.UI {
 		Class("navbar").
 		Body(
 			app.Ul().Body(
-				app.Li().Body(
-					app.A().Href("/").Text("Home"),
-				),
-				app.Li().Body(
-					app.A().Href("/about").Text("About"),
-				),
-				app.Li().Body(
-					app.A().Href("/galaxies").Text("Galaxies"),
-				),
-				app.Li().Body(
-					app.A().Href("/music").Text("Music"),
-				),
+				newMenuLink().
+					Link("/").
+					Text("Home"),
+				newMenuLink().
+					Link("/about").
+					Text("About"),
+				newMenuLink().
+					Link("/galaxies").
+					Text("Galaxies"),
+				newMenuLink().
+					Link("/music").
+					Text("Music"),
 				// Disabled for now since there are none anyway
-				app.Li().Body(
-					app.A().Href("/blog").Text("Blog"),
-				).Style("display", "none"),
+				app.Li().
+					Body(
+						app.A().Href("/blog").Text("Blog"),
+					).Style("display", "none"),
 			),
 			app.If(m.updateAvailable,
 				app.Div().Body(
@@ -73,4 +74,37 @@ func (m *menu) Render() app.UI {
 
 func (m *menu) onUpdateClick(ctx app.Context, e app.Event) {
 	ctx.Reload()
+}
+
+type menuLink struct {
+	app.Compo
+
+	IText string
+	ILink string
+}
+
+func newMenuLink() *menuLink {
+	return &menuLink{}
+}
+
+func (m *menuLink) Text(v string) *menuLink {
+	m.IText = v
+	return m
+}
+
+func (m *menuLink) Link(v string) *menuLink {
+	m.ILink = v
+	return m
+}
+
+func (m *menuLink) Render() app.UI {
+	return app.A().
+		Class("menuitem-link").
+		Href(m.ILink).
+		Body(app.Div().
+			Class("menuitem").
+			Body(app.Span().
+				Class("menuitem-text").
+				Text(m.IText)),
+		)
 }

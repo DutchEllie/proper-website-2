@@ -98,9 +98,11 @@ func (m *menu) Render() app.UI {
 	return app.Div().
 		ID(m.Iid).
 		Class(m.Iclass).
+		Style("height", "100%").
 		Body(
 			app.Div().
 				//Style("display", "flex").
+				Style("display", visible(!m.hideMenu)).
 				Style("width", "100%").
 				Style("height", "100%").
 				Style("overflow", "hidden").
