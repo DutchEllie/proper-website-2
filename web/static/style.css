@@ -58,7 +58,6 @@ body {
 }
 
 .main {
-	display: flex;
 	margin-top: 5px;
 	width: 900px;
 	position: relative;
