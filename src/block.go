@@ -9,12 +9,18 @@ type htmlBlock struct {
 
 	Iclass string
 	Isrc   string // HTML document source
+	Iid    string
 
 	// TODO: implement invisibility for other background functions
 }
 
 func newHTMLBlock() *htmlBlock {
 	return &htmlBlock{}
+}
+
+func (b *htmlBlock) ID(v string) *htmlBlock {
+	b.Iid = v
+	return b
 }
 
 func (b *htmlBlock) Class(v string) *htmlBlock {
@@ -46,10 +52,16 @@ type uiBlock struct {
 
 	Iclass string
 	Iui    []app.UI
+	Iid    string
 }
 
 func newUIBlock() *uiBlock {
 	return &uiBlock{}
+}
+
+func (b *uiBlock) ID(v string) *uiBlock {
+	b.Iid = v
+	return b
 }
 
 func (b *uiBlock) Class(v string) *uiBlock {

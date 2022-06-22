@@ -16,11 +16,14 @@ type page struct {
 	IleftBar         []app.UI
 	Imain            []app.UI
 
+	hideRightContent bool
 	// TODO: Possibly add "updateavailable" here, so it shows up on every page
 }
 
 func newPage() *page {
-	return &page{}
+	return &page{
+		hideRightContent: false,
+	}
 }
 
 func (p *page) Background(v ...app.UI) *page {
@@ -48,6 +51,11 @@ func (p *page) Main(v ...app.UI) *page {
 	return p
 }
 
+func (p *page) OnMount(ctx app.Context) {
+	ctx.Handle("right-hide", p.hideRight)
+	ctx.Handle("right-show", p.showRight)
+}
+
 func (p *page) Render() app.UI {
 	if p.IbackgroundClass == "" {
 		p.IbackgroundClass = app.AppendClass(p.IbackgroundClass, "background")
@@ -66,11 +74,28 @@ func (p *page) Render() app.UI {
 					}),
 				),
 			app.Div().
+				Style("display", visible(p.hideRightContent)).
 				Class("right").
+				ID("right").
 				Body(
 					app.Range(p.Imain).Slice(func(i int) app.UI {
 						return p.Imain[i]
 					}),
 				),
 		)
+}
+
+func visible(v bool) string {
+	if v {
+		return "none"
+	}
+	return "block"
+}
+
+func (p *page) hideRight(ctx app.Context, a app.Action) {
+	p.hideRightContent = true
+}
+
+func (p *page) showRight(ctx app.Context, a app.Action) {
+	p.hideRightContent = false
 }

@@ -34,9 +34,8 @@ func (m *menu) OnAppUpdate(ctx app.Context) {
 
 func (m *menu) Render() app.UI {
 	return app.Div().
-		Class("left").
 		Class("block").
-		Class("leftbarblock-nop").
+		//		Class("leftbarblock-nop").
 		Class("navbar").
 		Body(
 			app.Ul().Body(

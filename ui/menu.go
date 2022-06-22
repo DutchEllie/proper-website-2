@@ -129,9 +129,10 @@ func (m *menu) Render() app.UI {
 				),
 			app.Div().
 				Style("display", visible(m.hideMenu && m.showHamburgerMenu)).
-				Style("position", "absolute").
-				Style("top", "0").
-				Style("left", "0").
+				Style("position", "relative").
+				//				Style("top", "0").
+				//				Style("left", "0").
+				//				Style("right", "0").
 				Style("width", "100%").
 				Style("height", "100%").
 				Style("overflow", "hidden").
@@ -164,8 +165,10 @@ func pxToString(px int) string {
 
 func (m *menu) onHamburgerButtonClick(ctx app.Context, e app.Event) {
 	m.showHamburgerMenu = true
+	ctx.NewAction("right-hide")
 }
 
 func (m *menu) hideHamburgerMenu(ctx app.Context, e app.Event) {
 	m.showHamburgerMenu = false
+	ctx.NewAction("right-show")
 }
