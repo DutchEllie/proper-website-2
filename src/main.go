@@ -84,6 +84,9 @@ func main() {
 			"https://music-website.s3.nl-ams.scw.cloud/error-towa.mp3",
 			"https://music-website.s3.nl-ams.scw.cloud/diamond-city-lights-lazulight.opus",
 			"https://music-website.s3.nl-ams.scw.cloud/tsunami-finana.opus",
+			"https://music-website.s3.nl-ams.scw.cloud/%E7%A5%9E%E3%81%A3%E3%81%BD%E3%81%84%E3%81%AA.m4a",
+			"https://music-website.s3.nl-ams.scw.cloud/Servant%20of%20Evil%20with%20English%20Sub%20-%20%E6%82%AA%E3%83%8E%E5%8F%AC%E4%BD%BF%20-%20Kagamine%20Len%20-%20HQ.m4a",
+			"https://music-website.s3.nl-ams.scw.cloud/%E3%83%94%E3%83%8E%E3%82%AD%E3%82%AA%E3%83%94%E3%83%BC%20-%20%E3%81%8D%E3%81%BF%E3%82%82%E6%82%AA%E3%81%84%E4%BA%BA%E3%81%A7%E3%82%88%E3%81%8B%E3%81%A3%E3%81%9F%20feat.%20%E5%88%9D%E9%9F%B3%E3%83%9F%E3%82%AF%20_%20I%27m%20glad%20you%27re%20evil%20too.m4a",
 		},
 	}
 

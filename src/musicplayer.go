@@ -55,10 +55,22 @@ func (f *musicPlayer) OnMount(ctx app.Context) {
 	// Statically create all the music.
 	// I am not making a database for this shit lmao
 	// Also do not forget to at least set the currentlySelectedSong to the first one added, or at least make it point somewhere
-	f.songs["ievan-polka"] = newSong().
-		Title("Ievan Polka - Hatsune Miku").
-		URL("https://files.catbox.moe/lh229f.mp3").
-		ID("ievan-polka")
+	//	f.songs["ievan-polka"] = newSong().
+	//		Title("Ievan Polka - Hatsune Miku").
+	//		URL("https://files.catbox.moe/lh229f.mp3").
+	//		ID("ievan-polka")
+	f.songs["god-ish"] = newSong().
+		Title("God-ish (神っぽいな) feat. Hatsune Miku - PinocchioP").
+		URL("https://music-website.s3.nl-ams.scw.cloud/%E7%A5%9E%E3%81%A3%E3%81%BD%E3%81%84%E3%81%AA.m4a").
+		ID("god-ish")
+	f.songs["servant-of-evil"] = newSong().
+		Title("Servant of Evil (悪ノ召使) feat. Kagamine Rin - mothy / AkunoP").
+		URL("https://music-website.s3.nl-ams.scw.cloud/Servant%20of%20Evil%20with%20English%20Sub%20-%20%E6%82%AA%E3%83%8E%E5%8F%AC%E4%BD%BF%20-%20Kagamine%20Len%20-%20HQ.m4a").
+		ID("servant-of-evil")
+	f.songs["im-glad-youre-evil-too"] = newSong().
+		Title("I'm glad you're evil too (feat. Hatsune Miku) - PinocchioP").
+		URL("https://music-website.s3.nl-ams.scw.cloud/%E3%83%94%E3%83%8E%E3%82%AD%E3%82%AA%E3%83%94%E3%83%BC%20-%20%E3%81%8D%E3%81%BF%E3%82%82%E6%82%AA%E3%81%84%E4%BA%BA%E3%81%A7%E3%82%88%E3%81%8B%E3%81%A3%E3%81%9F%20feat.%20%E5%88%9D%E9%9F%B3%E3%83%9F%E3%82%AF%20_%20I%27m%20glad%20you%27re%20evil%20too.m4a").
+		ID("im-glad-youre-evil-too")
 	f.songs["tokusya-seizon"] = newSong().
 		Title("Tokusya-Seizon Wonder-la-der!! - Amane Kanata").
 		URL("https://music-website.s3.nl-ams.scw.cloud/Tokusya-Seizon%20Wonder-la-der%21%21.mp3").
@@ -141,6 +153,7 @@ func (f *musicPlayer) Render() app.UI {
 							app.Span().
 								Style("text-decoration", "underline").
 								Style("width", "fit-content").
+								Class("finger-hover").
 								Text(f.songs[s].ITitle).
 								OnClick(func(ctx app.Context, e app.Event) {
 									ctx.NewActionWithValue("switchSong", f.songs[s].IID)
