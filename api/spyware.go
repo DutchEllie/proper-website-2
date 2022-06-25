@@ -50,7 +50,7 @@ func (a *apiapp) Visit(w http.ResponseWriter, r *http.Request) {
 	} else if err == http.ErrNoCookie {
 		// Create cookie and send it
 		log.Printf("No cookie sent by client, sending cookie to them!\n")
-		c = &http.Cookie{Name: "spyware", Value: uuid.NewString(), MaxAge: 0}
+		c = &http.Cookie{Name: "spyware", Value: uuid.NewString(), Path: "/", MaxAge: 0}
 		http.SetCookie(w, c)
 	}
 

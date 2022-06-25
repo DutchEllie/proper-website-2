@@ -131,29 +131,37 @@ func (g guestbook) Render() app.UI {
 					),
 			).OnSubmit(func(ctx app.Context, e app.Event) {
 			// This was to prevent the page from reloading
+			fmt.Println("Send clicked")
 			e.PreventDefault()
 			if g.name == "" || g.message == "" {
 				fmt.Printf("Error: one or more field(s) are empty. For now unhandled\n")
+				g.gbErrorModalOpen = true
+				g.errorText = "One or more field(s) are empty. Fix that shit man."
 				return
 			}
+			fmt.Println("Nothing too empty")
 			if len(g.name) > 40 || len(g.message) > 360 {
 				fmt.Printf("Error: Your message is too long fucker\n")
 				g.gbModalOpen = true
 				return
 			}
+			fmt.Println("Got through validity")
 			var uuid string = ""
-			c := client.Jar.Cookies(app.Window().URL())
-			for _, c2 := range c {
-				if c2.Name == "spyware" {
-					uuid = c2.Value
-				}
-			}
-			// Check if uuid is set, if it's not, then clearly the cookie does not exist
-			if uuid == "" {
-				uuid = "undetermined"
-				g.gbErrorModalOpen = true
-				return
-			}
+			//			c := client.Jar.Cookies(app.Window().URL())
+			//			fmt.Println("Getting cookies")
+			//			for _, c2 := range c {
+			//				if c2.Name == "spyware" {
+			//					uuid = c2.Value
+			//					fmt.Println("Found spyware cookie")
+			//				}
+			//			}
+			//			// Check if uuid is set, if it's not, then clearly the cookie does not exist
+			//			if uuid == "" {
+			//				uuid = "undetermined"
+			//				g.errorText = "Failed sending message, couldn't insert UUID"
+			//				g.gbErrorModalOpen = true
+			//				return
+			//			}
 
 			g.OnSubmit(ctx, g.name, g.email, g.website, g.message, uuid)
 			g.clear()
@@ -173,7 +181,7 @@ func (g guestbook) Render() app.UI {
 			g.gbErrorModalOpen,
 			NewGuestbookAlertModal().
 				OnClose(func() {
-					g.gbModalOpen = false
+					g.gbErrorModalOpen = false
 					g.Update()
 				}).
 				Text(fmt.Sprintf("Error placing comment: %s", g.errorText)),

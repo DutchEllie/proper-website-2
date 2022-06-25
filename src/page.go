@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"net/url"
 
 	"github.com/maxence-charriere/go-app/v9/pkg/app"
 )
@@ -66,9 +67,17 @@ func (p *page) OnMount(ctx app.Context) {
 			app.Logf("Error while creating vist request %s\n", err.Error())
 		}
 		defer resp.Body.Close()
+		cook, err := resp.Request.Cookie("spyware")
+		if err != nil {
+			app.Logf("Error reading cookie from request: %s\n", err)
+		}
+		fmt.Printf("cook: %v\n", cook)
 
-		c := resp.Cookies()
-		fmt.Printf("c: %v\n", c)
+		ctx.Dispatch(func(ctx app.Context) {
+			fmt.Printf("jar: %v\n", jar)
+			c := client.Jar.Cookies(&url.URL{Host: app.Window().URL().Hostname()})
+			fmt.Printf("c: %v\n", c)
+		})
 	})
 
 }
