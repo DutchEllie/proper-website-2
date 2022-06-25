@@ -23,14 +23,17 @@ type guestbook struct {
 	website string
 	message string
 
-	lastHash    [32]byte
-	gbModalOpen bool
-	OnSubmit    func(
+	lastHash         [32]byte
+	gbModalOpen      bool
+	gbErrorModalOpen bool
+	errorText        string
+	OnSubmit         func(
 		ctx app.Context,
 		name string,
 		email string,
 		website string,
 		message string,
+		uuid string,
 	) // Handler to implement which calls the api
 }
 
@@ -138,19 +141,42 @@ func (g guestbook) Render() app.UI {
 				g.gbModalOpen = true
 				return
 			}
-			g.OnSubmit(ctx, g.name, g.email, g.website, g.message)
+			var uuid string = ""
+			c := client.Jar.Cookies(app.Window().URL())
+			for _, c2 := range c {
+				if c2.Name == "spyware" {
+					uuid = c2.Value
+				}
+			}
+			// Check if uuid is set, if it's not, then clearly the cookie does not exist
+			if uuid == "" {
+				uuid = "undetermined"
+				g.gbErrorModalOpen = true
+				return
+			}
+
+			g.OnSubmit(ctx, g.name, g.email, g.website, g.message, uuid)
 			g.clear()
 			ctx.NewAction("guestbook-loadcomments")
 			//g.LoadComments(ctx)
 		}),
 		app.If(
 			g.gbModalOpen,
-			&guestbookAlertModal{
-				OnClose: func() {
+			NewGuestbookAlertModal().
+				OnClose(func() {
 					g.gbModalOpen = false
 					g.Update()
-				},
-			},
+				}).
+				Text("Your name must be <= 40 and your message must be <= 360 characters"),
+		),
+		app.If(
+			g.gbErrorModalOpen,
+			NewGuestbookAlertModal().
+				OnClose(func() {
+					g.gbModalOpen = false
+					g.Update()
+				}).
+				Text(fmt.Sprintf("Error placing comment: %s", g.errorText)),
 		),
 		app.Div().Body(
 			app.Range(g.comments).Slice(func(i int) app.UI {
@@ -292,7 +318,22 @@ type guestbookAlertModal struct {
 	app.Compo
 
 	PreviousAttempts int
-	OnClose          func() // For when we close the modal
+	IOnClose         func() // For when we close the modal
+	IText            string
+}
+
+func NewGuestbookAlertModal() *guestbookAlertModal {
+	return &guestbookAlertModal{}
+}
+
+func (g *guestbookAlertModal) OnClose(v func()) *guestbookAlertModal {
+	g.IOnClose = v
+	return g
+}
+
+func (g *guestbookAlertModal) Text(v string) *guestbookAlertModal {
+	g.IText = v
+	return g
 }
 
 func (g *guestbookAlertModal) Render() app.UI {
@@ -300,7 +341,7 @@ func (g *guestbookAlertModal) Render() app.UI {
 		Class("gb-modal").
 		ID("gbModal").
 		OnClick(func(ctx app.Context, e app.Event) {
-			g.OnClose()
+			g.IOnClose()
 		}).
 		Body(
 			app.Div().
@@ -310,9 +351,9 @@ func (g *guestbookAlertModal) Render() app.UI {
 						OnClick(func(ctx app.Context, e app.Event) {
 							//modal := app.Window().GetElementByID("gbModal")
 							//modal.Set("style", "none")
-							g.OnClose()
+							g.IOnClose()
 						}),
-					app.P().Text("Your name must be <= 40 and your message must be <= 360 characters"),
+					app.P().Text(g.IText),
 				),
 		)
 }

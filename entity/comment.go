@@ -9,4 +9,6 @@ type Comment struct {
 	Email    string    `json:"email,omitempty" bson:"email,omitempty"`
 	Message  string    `json:"message" bson:"message"`
 	PostDate time.Time `json:"time" bson:"time"`
+
+	UUID string `json:"uuid" bson:"uuid"`
 }

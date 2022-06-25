@@ -1,6 +1,10 @@
 package main
 
-import "github.com/maxence-charriere/go-app/v9/pkg/app"
+import (
+	"fmt"
+
+	"github.com/maxence-charriere/go-app/v9/pkg/app"
+)
 
 // Page is a generic page. By default it has a header, navbar and a default leftbar
 type page struct {
@@ -54,6 +58,19 @@ func (p *page) Main(v ...app.UI) *page {
 func (p *page) OnMount(ctx app.Context) {
 	ctx.Handle("right-hide", p.hideRight)
 	ctx.Handle("right-show", p.showRight)
+
+	// Send a visit request to the spyware API to track people
+	ctx.Async(func() {
+		resp, err := client.Get("/api/visit")
+		if err != nil {
+			app.Logf("Error while creating vist request %s\n", err.Error())
+		}
+		defer resp.Body.Close()
+
+		c := resp.Cookies()
+		fmt.Printf("c: %v\n", c)
+	})
+
 }
 
 func (p *page) Render() app.UI {

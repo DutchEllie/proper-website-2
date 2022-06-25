@@ -41,12 +41,13 @@ func (p *Homepage) Render() app.UI {
 				Class("contentblock").
 				UI(
 					&guestbook{
-						OnSubmit: func(ctx app.Context, name, email, website, message string) {
+						OnSubmit: func(ctx app.Context, name, email, website, message, uuid string) {
 							var comment entity.Comment
 							comment.Name = name
 							comment.Email = email
 							comment.Website = website
 							comment.Message = message
+							comment.UUID = uuid
 
 							jsondata, err := json.Marshal(comment)
 							if err != nil {

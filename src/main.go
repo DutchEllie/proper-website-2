@@ -4,8 +4,10 @@ import (
 	"compress/gzip"
 	"log"
 	"net/http"
+	"net/http/cookiejar"
 	"os"
 
+	"dutchellie.nl/DutchEllie/proper-website-2/api"
 	"github.com/gorilla/handlers"
 	"github.com/maxence-charriere/go-app/v9/pkg/app"
 )
@@ -16,7 +18,21 @@ import (
 //	collection *mongo.Collection
 //}
 
+var jar http.CookieJar
+var client http.Client
+
 func main() {
+	// Create cookiejar
+	var err error
+	jar, err = cookiejar.New(nil)
+	if err != nil {
+		log.Fatalf("Error creating cookiejar: %s\n", err.Error())
+	}
+
+	client = http.Client{
+		Jar: jar,
+	}
+
 	homepage := NewHomepage()
 	aboutpage := NewAboutPage()
 	galaxiespage := NewGalaxiesPage()
@@ -92,7 +108,17 @@ func main() {
 
 	app.GenerateStaticWebsite("./staticsite", handler)
 	compressed := handlers.CompressHandlerLevel(handler, gzip.BestSpeed)
+
+	// Create spyware module
+	spywareapi, err := api.NewApiApp()
+	if err != nil {
+		log.Fatal(err)
+	}
+
 	http.Handle("/", compressed)
+	http.HandleFunc("/api/visit", spywareapi.Visit)
+
+	//	router.HandleFunc("/api/visit", spywareapi.Visit)
 	if os.Getenv("GEN_STATIC_SITE") == "true" {
 		return
 	}
