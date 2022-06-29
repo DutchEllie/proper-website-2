@@ -1,23 +1,24 @@
+baseURL: quenten.nl
 name: newsite-prod
 containerEnv:
   - name: APIURL
     value: https://api.quenten.nl/api
 service:
-  name: newsite-prod
+  name: "{{ .Values.name }}"
 ingress:
-  name: newsite-prod
+  name: "{{ .Values.name }}"
   annotations:
-    cert-manager.io/cluster-issuer: letsencrypt-prod
-    external-dns.alpha.kubernetes.io/hostname: "quenten.nl"
+    cert-manager.io/cluster-issuer: "letsencrypt-{{ .Values.name }}"
+    external-dns.alpha.kubernetes.io/hostname: "{{ .Values.baseURL }}"
     nginx.ingress.kubernetes.io/configuration-snippet: |   
       add_header Content-Security-Policy "frame-ancestors 'self' https://forestofunix.xyz";
       proxy_hide_header X-Frame-Options ;
   tls:
     - hosts:
-        - quenten.nl
-      secretName: newsite-tls
+        - "{{ .Values.baseURL }}"
+      secretName: "{{ .Values.name }}-tls"
   hosts:
-    - host: quenten.nl
+    - host: "{{ .Values.baseURL }}"
       paths:
         - path: /
           pathType: Prefix
