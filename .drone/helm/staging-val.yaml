@@ -8,7 +8,7 @@ service:
 ingress:
   name: "{{ .Values.name }}"
   annotations:
-    cert-manager.io/cluster-issuer: "letsencrypt-{{ .Values.name }}"
+    cert-manager.io/cluster-issuer: "letsencrypt-staging"
     external-dns.alpha.kubernetes.io/hostname: "{{ .Values.baseURL }}"
     nginx.ingress.kubernetes.io/configuration-snippet: |   
       add_header Content-Security-Policy "frame-ancestors 'self' https://forestofunix.xyz";
