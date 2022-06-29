@@ -65,6 +65,10 @@ func main() {
 		Title:           "Internetica Galactica",
 		Description:     "A 1990's style PWA!",
 		Author:          "Quenten",
+		Scripts: []string{
+			"https://cdn.tailwindcss.com",
+			"/web/static/tailwind.config.js",
+		},
 		Keywords: []string{
 			"Based website",
 			"Cool website",

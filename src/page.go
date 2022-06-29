@@ -87,26 +87,30 @@ func (p *page) Render() app.UI {
 		p.IbackgroundClass = app.AppendClass(p.IbackgroundClass, "background")
 	}
 	return app.Div().
-		Class("main").
+		Class("flex flex-col").
 		Body(
 			// Header and navbar
 			&header{},
 			app.Div().
-				Class("left").
+				Class("flex flex-row").
 				Body(
-					&navbar{},
-					app.Range(p.IleftBar).Slice(func(i int) app.UI {
-						return p.IleftBar[i]
-					}),
-				),
-			app.Div().
-				Style("display", visible(p.hideRightContent)).
-				Class("right").
-				ID("right").
-				Body(
-					app.Range(p.Imain).Slice(func(i int) app.UI {
-						return p.Imain[i]
-					}),
+					app.Div().
+						Class("basis-1/3").
+						Body(
+							&navbar{},
+							app.Range(p.IleftBar).Slice(func(i int) app.UI {
+								return p.IleftBar[i]
+							}),
+						),
+					app.Div().
+						Style("display", visible(p.hideRightContent)).
+						Class("basis-2/3").
+						ID("right").
+						Body(
+							app.Range(p.Imain).Slice(func(i int) app.UI {
+								return p.Imain[i]
+							}),
+						),
 				),
 		)
 }
