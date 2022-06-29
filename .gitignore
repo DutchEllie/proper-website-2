@@ -2,3 +2,4 @@
 app
 web/*.wasm
 staticsite
+node_modules
