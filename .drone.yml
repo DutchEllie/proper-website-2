@@ -1,86 +1,86 @@
-kind: pipeline
-type: kubernetes
-name: staging
-
-trigger:
-  event:
-    - push
-  branch:
-    - main
-
-# STAGING!!!!
-steps:
-- name: build-wasm
-  image: golang:1.17.8-alpine
-  volumes:
-    - name: build-staging
-      path: /drone/src/build
-  environment:
-    APIURL: https://api.quenten.nl/api/testing
-    CGO_ENABLED: 0
-  commands:
-    - mkdir ./build/web
-    - GOARCH=wasm GOOS=js go build -o ./build/web/app.wasm -ldflags="-X 'main.ApiURL=$APIURL'" ./src
-- name: build-server
-  image: golang:1.17.8-alpine
-  volumes:
-    - name: build-staging
-      path: /drone/src/build
-  environment:
-    APIURL: https://api.quenten.nl/api/testing
-    CGO_ENABLED: 0
-  commands:
-    - go build -o ./build/app -ldflags="-X 'main.ApiURL=$APIURL'" ./src
-- name: build-publish-image
-  image: plugins/docker
-  privileged: true
-  volumes:
-    - name: build-staging
-      path: /drone/src/build
-  settings:
-    cache_from:
-      - "dutchellie/proper-website-2:dev"
-    username:
-      from_secret: docker_username
-    password:
-      from_secret: docker_password
-    dockerfile: Dockerfile
-    repo: dutchellie/proper-website-2
-    tags:
-      - dev-${DRONE_COMMIT_SHA:0:8}
-  depends_on:
-    - build-wasm
-    - build-server
-- name: deploy-staging
-  image: pelotech/drone-helm3
-  settings:
-    mode: upgrade
-    chart: .drone/helm/chart
-    namespace: drone-staging
-    release: newsite-staging
-    skip_tls_verify: true
-    values_files:
-      - .drone/helm/staging-val.yaml
-    values:
-      - "image=dutchellie/proper-website-2:dev-${DRONE_COMMIT_SHA:0:8}"
-      - "baseURL=staging.quenten.nl"
-      - "name=newsite-staging"
-    kube_api_server:
-      from_secret: staging_api_server
-    kube_token:
-      from_secret: staging_kube_token
-    kube_certificate:
-      from_secret: staging_kube_certificate
-    kube_service_account: drone-deploy
-    dry_run: false
-  depends_on:
-    - build-publish-image
-
-volumes:
-  - name: build-staging
-    temp: {}
-
----
+#kind: pipeline
+#type: kubernetes
+#name: staging
+#
+#trigger:
+#  event:
+#    - push
+#  branch:
+#    - main
+#
+## STAGING!!!!
+#steps:
+#- name: build-wasm
+#  image: golang:1.17.8-alpine
+#  volumes:
+#    - name: build-staging
+#      path: /drone/src/build
+#  environment:
+#    APIURL: https://api.quenten.nl/api/testing
+#    CGO_ENABLED: 0
+#  commands:
+#    - mkdir ./build/web
+#    - GOARCH=wasm GOOS=js go build -o ./build/web/app.wasm -ldflags="-X 'main.ApiURL=$APIURL'" ./src
+#- name: build-server
+#  image: golang:1.17.8-alpine
+#  volumes:
+#    - name: build-staging
+#      path: /drone/src/build
+#  environment:
+#    APIURL: https://api.quenten.nl/api/testing
+#    CGO_ENABLED: 0
+#  commands:
+#    - go build -o ./build/app -ldflags="-X 'main.ApiURL=$APIURL'" ./src
+#- name: build-publish-image
+#  image: plugins/docker
+#  privileged: true
+#  volumes:
+#    - name: build-staging
+#      path: /drone/src/build
+#  settings:
+#    cache_from:
+#      - "dutchellie/proper-website-2:dev"
+#    username:
+#      from_secret: docker_username
+#    password:
+#      from_secret: docker_password
+#    dockerfile: Dockerfile
+#    repo: dutchellie/proper-website-2
+#    tags:
+#      - dev-${DRONE_COMMIT_SHA:0:8}
+#  depends_on:
+#    - build-wasm
+#    - build-server
+#- name: deploy-staging
+#  image: pelotech/drone-helm3
+#  settings:
+#    mode: upgrade
+#    chart: .drone/helm/chart
+#    namespace: drone-staging
+#    release: newsite-staging
+#    skip_tls_verify: true
+#    values_files:
+#      - .drone/helm/staging-val.yaml
+#    values:
+#      - "image=dutchellie/proper-website-2:dev-${DRONE_COMMIT_SHA:0:8}"
+#      - "baseURL=staging.quenten.nl"
+#      - "name=newsite-staging"
+#    kube_api_server:
+#      from_secret: staging_api_server
+#    kube_token:
+#      from_secret: staging_kube_token
+#    kube_certificate:
+#      from_secret: staging_kube_certificate
+#    kube_service_account: drone-deploy
+#    dry_run: false
+#  depends_on:
+#    - build-publish-image
+#
+#volumes:
+#  - name: build-staging
+#    temp: {}
+#
+#---
 
 kind: pipeline
 type: kubernetes
@@ -88,9 +88,7 @@ name: production
 
 trigger:
   event:
-    - promote
-  target:
-    - production
+    - push
   branch:
     - main
 
@@ -149,7 +147,7 @@ steps:
       - .drone/helm/prod-val.yaml
     values:
       - "image=dutchellie/proper-website-2:latest-${DRONE_COMMIT_SHA:0:8}"
-      - "baseURL=quenten.nl"
+      - "baseURL=old.quenten.nl"
       - "name=newsite-prod"
     kube_api_server:
       from_secret: prod_api_server
