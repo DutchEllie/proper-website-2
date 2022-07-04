@@ -246,3 +246,42 @@ steps:
 volumes:
   - name: build-feature
     temp: {}
+
+---
+
+kind: pipeline
+type: kubernetes
+name: remove-feature-branch
+
+trigger:
+  event:
+    - promote
+  target:
+    - destroy
+  branch:
+    exclude:
+      - main
+
+steps:
+  - name: destroy
+    image: pelotech/drone-helm3
+    settings:
+      mode: uninstall
+      chart: .drone/helm/chart
+      namespace: drone-staging
+      release: feature-${DRONE_BRANCH}
+      skip_tls_verify: true
+      values_files:
+        - .drone/helm/staging-val.yaml
+      values:
+        - "image=dutchellie/proper-website-2:feature-${DRONE_BRANCH}-${DRONE_COMMIT_SHA:0:8}"
+        - "baseURL=${DRONE_BRANCH}.quenten.nl"
+        - "name=${DRONE_BRANCH}-deployment"
+      kube_api_server:
+        from_secret: staging_api_server
+      kube_token:
+        from_secret: staging_kube_token
+      kube_certificate:
+        from_secret: staging_kube_certificate
+      kube_service_account: drone-deploy
+      dry_run: false
